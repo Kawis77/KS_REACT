@@ -1,10 +1,9 @@
-// App.js
-import React from 'react';
+import NavigationBar from "./components/NavigationBar";
 
 function App() {
   return (
     <div>
-      <h1>Hello world!</h1>
+  <NavigationBar/>
     </div>
   );
 }

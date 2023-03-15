@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import NavigationBar from "./Application/components/NavigationBar";
 import './Application/styles/App.css';
 import DocumentPage from "./Document/pages/DocumentPage"; // importujesz nowy plik
@@ -25,6 +26,15 @@ function App() {
     
     </BrowserRouter>
 
+=======
+import NavigationBar from "./components/NavigationBar";
+
+function App() {
+  return (
+    <div>
+  <NavigationBar/>
+    </div>
+>>>>>>> origin/main
   );
 }
 

@@ -1,0 +1,14 @@
+.sidebar {
+    position: fixed;
+    top: 60px; /* wysokość DocumentNavigationBar + margines */
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    height: calc(100% - 60px); /* wysokość widoku przeglądarki minus wysokość DocumentNavigationBar i margines */
+    overflow: auto;
+    border: 1px solid black;
+    padding: 10px;
+    margin-top: 140px;
+    width: 15%;
+    background-color: lightgray;
+  }

@@ -1,0 +1,28 @@
+.navbar-custom {
+    width: calc(100% - 20%);
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 80px;
+    background-color: lightgray !important;
+    border: 1px solid black;
+  }
+
+  .navbar-custom .nav-link {
+    margin-right: 1rem;
+  }
+ 
+  .navbar-custom .nav-link {
+    font-size: 20px;
+    margin-right: 30px;
+  }
+
+  .navbar-custom .nav-link i {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  
+  
+  
+  
+  
+  

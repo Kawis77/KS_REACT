@@ -1,0 +1,25 @@
+.navbar-document {
+background-color: lightgray !important;
+
+border: 1px solid black;
+  }
+
+  .navbar-document .nav-link {
+    margin-right: 1rem;
+  }
+ 
+  .navbar-document .nav-link {
+    font-size: 20px;
+    margin-right: 30px;
+  }
+
+  .navbar-document .nav-link i {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  
+  
+  
+  
+  
+  

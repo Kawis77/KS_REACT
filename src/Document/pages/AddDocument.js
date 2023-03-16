@@ -2,14 +2,21 @@ import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import Sidebar from '../components/Sidebar';
 
-
-function DocumentPage() {
+function AddDocument() {
   return (
-    <div className='page-content'>
-      <DocumentNavigationBar/>
-    <Sidebar/>
+    <div>
+        <DocumentNavigationBar/>
+      <Sidebar/>
+    
+    <div>
+ewcewcw
+ewcwe
+ewcdw
+ewcewcwc
+
+    </div>
     </div>
   );
 }
 
-export default DocumentPage;
+export default AddDocument;

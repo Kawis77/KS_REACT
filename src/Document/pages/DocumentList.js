@@ -2,14 +2,14 @@ import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import Sidebar from '../components/Sidebar';
 
-
-function DocumentPage() {
+function DocumentList() {
   return (
-    <div className='page-content'>
-      <DocumentNavigationBar/>
-    <Sidebar/>
+    <div>
+        <DocumentNavigationBar/>
+      <Sidebar/>
+    
     </div>
   );
 }
 
-export default DocumentPage;
+export default DocumentList;

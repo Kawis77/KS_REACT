@@ -1,0 +1,6 @@
+.document-menu-container {
+    border: 1px solid #ccc; /* obrysowanie krawędzi */
+    border-radius: 5px; /* zaokrąglenie krawędzi */
+    padding: 10px; /* wewnętrzny margines */
+    background-color: #f8f8f8; /* lekko szare tło */
+  }

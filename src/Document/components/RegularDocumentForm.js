@@ -1,52 +1,89 @@
 import React, { useState } from 'react';
-import { Tab, Tabs, Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
-import { EditorState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-function RegularDocumentForm() {
+const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    try {
-      console.log(formData);
-      const response = await axios.post('http://localhost:8080/api/document/create', formData);
-      if (response.status === 200) {
-        // success logic
-        console.log('Document created successfully');
-      } else {
-        // failure logic
-        console.error('Document creation failed');
-      }
-    } catch (error) {
-      // error handling
-      console.error(error);
-    }
-  };
-
-// ...
-
-const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-// ...
-
-const onEditorStateChange = (newEditorState) => {
-  setEditorState(newEditorState);
-};
+  const [editorData, setEditorData] = useState('');
+  const [summaryData, setSummaryData] = useState({});
 
   const handleSelect = (selectedTab) => {
     setActiveTab(selectedTab);
-  }
+    if (selectedTab === 'tab4') {
+      const formData = new FormData(document.getElementById('regular-document-form'));
+      const newSummaryData = {
+        title: formData.get('title'),
+        author: formData.get('author'),
+        createDate: formData.get('create-date'),
+        location: formData.get('location'),
+        type: formData.get('type'),
+        version: formData.get('version'),
+        publicationNote: formData.get('publicationNote'),
+        content: editorData
+      };
+      setSummaryData(newSummaryData);
+    }
+  };
+
+  const onEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setEditorData(data);
+  };
+
+  const handleSave = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const documentData = {
+      title: formData.get('title'),
+      author: formData.get('author'),
+      createDate: formData.get('create-date'),
+      location: formData.get('location'),
+      type: formData.get('type'),
+      version: formData.get('version'),
+      publicationNote: formData.get('publicationNote'),
+      content: editorData
+    };
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/document/create', documentData);
+      console.log(response.data);
+      // Obsłuż odpowiedź z serwera, np. czyść formularz lub przekieruj na inną stronę
+    } catch (error) {
+      console.error(error);
+      // Obsłuż błędy, np. wyświetl komunikat o błędzie
+    }
+  };
+
+  const summaryTabContent = (documentData) => (
+    <div>
+      <Row>
+        <Col>
+          <p><strong>Tytuł:</strong> {documentData.title}</p>
+          <p><strong>Autor:</strong> {documentData.author}</p>
+          <p><strong>Data wydania:</strong> {documentData.createDate}</p>
+          <p><strong>Lokacja:</strong> {documentData.location}</p>
+          <p><strong>Kategoria:</strong> {documentData.type}</p>
+          <p><strong>Wersja:</strong> {documentData.version}</p>
+          <p><strong>Notka publikacji:</strong> {documentData.publicationNote}</p>
+        </Col>
+        <Col>
+          <CKEditor
+            editor={ClassicEditor}
+            data={documentData.content}
+            readOnly={true}
+          />
+        </Col>
+      </Row>
+    </div>
+  );
 
   return (
     <div>
-      <Tabs activeKey={activeTab} onSelect={handleSelect}>
-        <Tab eventKey="tab1" title="Dane">
-          <Form onSubmit={handleSave}>
+      <Form id='regular-document-form' onSubmit={handleSave}>
+        <Tabs activeKey={activeTab} onSelect={handleSelect}>
+          <Tab eventKey="tab1" title="Dane">
             <Row>
               <Col>
                 <Form.Group controlId="formTitle">
@@ -101,26 +138,45 @@ const onEditorStateChange = (newEditorState) => {
               <Form.Label>Notka publikacji</Form.Label>
               <Form.Control name='publicationNote' as="textarea" rows={3} />
             </Form.Group>
-
-            <Button className='save-button' variant="primary" type="submit">
-              Zapisz
-            </Button>
-          </Form>
-        </Tab>
-        <Tab eventKey="tab2" title="Zakładka 2">
-          <Editor
-            editorState={editorState}
-            onEditorStateChange={onEditorStateChange}
-            toolbar={{
-              options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'remove', 'history'],
-              inline: { options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace', 'superscript', 'subscript'] },
-              list: { options:['unordered', 'ordered', 'indent', 'outdent'] },
-            }}
-          />
-        </Tab>
-      </Tabs>
+          </Tab>
+          <Tab eventKey="tab2" title="Kontent">
+            <CKEditor
+              editor={ClassicEditor}
+              data={editorData}
+              onChange={onEditorChange}
+            />
+          </Tab>
+          <Tab eventKey="tab3" title="Dostep">
+          </Tab>
+<Tab eventKey="tab4" title="Podsumowanie">
+  <div>
+    <Row>
+      <Col>
+        <p><strong>Tytuł:</strong> {summaryData.title}</p>
+        <p><strong>Autor:</strong> {summaryData.author}</p>
+        <p><strong>Data wydania:</strong> {summaryData.createDate}</p>
+        <p><strong>Lokacja:</strong> {summaryData.location}</p>
+        <p><strong>Kategoria:</strong> {summaryData.type}</p>
+        <p><strong>Wersja:</strong> {summaryData.version}</p>
+        <p><strong>Notka publikacji:</strong> {summaryData.publicationNote}</p>
+      </Col>
+      <Col>
+        <CKEditor
+          editor={ClassicEditor}
+          data={summaryData.content}
+          readOnly={true}
+        />
+      </Col>
+    </Row>
+    <Button className='save-button' variant="primary" type="submit">
+      Zapisz
+    </Button>
+  </div>
+</Tab>
+        </Tabs>
+      </Form>
     </div>
   );
-}
+};
 
 export default RegularDocumentForm;

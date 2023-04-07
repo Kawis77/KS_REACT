@@ -18,7 +18,7 @@ const RegularDocumentForm = () => {
         author: formData.get('author'),
         createDate: formData.get('create-date'),
         location: formData.get('location'),
-        type: formData.get('type'),
+        type: formData.get('category'),
         version: formData.get('version'),
         publicationNote: formData.get('publicationNote'),
         content: editorData
@@ -40,14 +40,14 @@ const RegularDocumentForm = () => {
       author: formData.get('author'),
       createDate: formData.get('create-date'),
       location: formData.get('location'),
-      type: formData.get('type'),
+      type: formData.get('category'),
       version: formData.get('version'),
       publicationNote: formData.get('publicationNote'),
       content: editorData
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/document/create', documentData);
+      const response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
       console.log(response.data);
       // Obsłuż odpowiedź z serwera, np. czyść formularz lub przekieruj na inną stronę
     } catch (error) {
@@ -64,7 +64,7 @@ const RegularDocumentForm = () => {
           <p><strong>Autor:</strong> {documentData.author}</p>
           <p><strong>Data wydania:</strong> {documentData.createDate}</p>
           <p><strong>Lokacja:</strong> {documentData.location}</p>
-          <p><strong>Kategoria:</strong> {documentData.type}</p>
+          <p><strong>Kategoria:</strong> {documentData.category}</p>
           <p><strong>Wersja:</strong> {documentData.version}</p>
           <p><strong>Notka publikacji:</strong> {documentData.publicationNote}</p>
         </Col>
@@ -118,7 +118,7 @@ const RegularDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formType">
                   <Form.Label>Kategoria</Form.Label>
-                  <Form.Control name='type' as="select">
+                  <Form.Control name='category' as="select">
                     <option>Kategortia1</option>
                     <option>Kategoria2</option>
                     <option>Kategoria3</option>
@@ -156,7 +156,7 @@ const RegularDocumentForm = () => {
         <p><strong>Autor:</strong> {summaryData.author}</p>
         <p><strong>Data wydania:</strong> {summaryData.createDate}</p>
         <p><strong>Lokacja:</strong> {summaryData.location}</p>
-        <p><strong>Kategoria:</strong> {summaryData.type}</p>
+        <p><strong>Kategoria:</strong> {summaryData.category}</p>
         <p><strong>Wersja:</strong> {summaryData.version}</p>
         <p><strong>Notka publikacji:</strong> {summaryData.publicationNote}</p>
       </Col>

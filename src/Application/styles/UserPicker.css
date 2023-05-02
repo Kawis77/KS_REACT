@@ -1,0 +1,52 @@
+.user-item {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc; /* Dodaj tę linijkę */
+}
+
+.user-item:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+  
+  .user-item.selected {
+    background-color: #e0e0e0;
+  }
+
+  .modal-header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ccc; /* Dodaj tę linijkę */
+    margin-bottom: 20px;
+  }
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .user-list {
+    overflow: auto;
+    flex-grow: 1; /* Dodaj tę linię */
+    display: flex; /* Dodaj tę linię */
+    flex-direction: column; /* Dodaj tę linię */
+    align-items: flex-start; /* Dodaj tę linię */
+  }
+  
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  .buttons-container button {
+    margin-left: 1rem;
+    cursor: pointer;
+  }
+  
+  .buttons-container button:hover,
+  .user-item.selected {
+    background-color: #cce5ff;
+  }

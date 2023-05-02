@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import UserPicker from '../../Application/components/dialogs/UserPicker'; 
 import axios from 'axios';
 
 const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [editorData, setEditorData] = useState('');
   const [summaryData, setSummaryData] = useState({});
+
+
+  const handleUserSelected = (user) => {
+    // Tutaj możesz zaktualizować stan z informacjami o wybranym użytkowniku
+    console.log('Wybrany użytkownik:', user);
+  };
 
   const handleSelect = (selectedTab) => {
     setActiveTab(selectedTab);
@@ -94,7 +101,7 @@ const RegularDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formAuthor">
                   <Form.Label>Autor</Form.Label>
-                  <Form.Control name='author' type="text" placeholder="Wpisz autora" />
+                  <UserPicker onUserSelected={handleUserSelected} /> {/* Użycie komponentu UserPicker */}
                 </Form.Group>
               </Col>
             </Row>

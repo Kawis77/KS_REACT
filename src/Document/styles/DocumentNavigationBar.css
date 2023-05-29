@@ -18,6 +18,23 @@ border: 1px solid black;
     margin-left: 10px;
   }
   
+
+  .custom-modal {
+    width: 400px;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+
   
   
   

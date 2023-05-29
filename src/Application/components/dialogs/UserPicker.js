@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import '../../styles/UserPicker.css';
 
 const UserPicker = ({ onUserSelected }) => {
@@ -67,15 +67,15 @@ const UserPicker = ({ onUserSelected }) => {
           ))}
         </ul>
         <div className="buttons-container">
-          <button className="modal-button" onClick={handleOkButtonClick}>
+          <Button variant="primary" className="modal-button" onClick={handleOkButtonClick}>
             OK
-          </button>
-          <button
+          </Button>
+          <Button variant="secondary"
             className="modal-button"
             onClick={() => setModalIsOpen(false)}
           >
             Anuluj
-          </button>
+          </Button>
         </div>
       </Modal>
     </>

@@ -8,24 +8,25 @@ function DocumentList() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('/api/documents')
+    fetch('http://localhost:8080/api/document/read/all')
       .then(response => response.json())
       .then(data => setData(data));
+      console.log(data);
   }, []);
 
   const columns = [
     {
-      title: 'Title',
+      title: 'Nazwa',
       dataIndex: 'title',
       key: 'title'
     },
     {
-      title: 'Author',
-      dataIndex: 'author',
-      key: 'author'
+      title: 'Wlasciciel',
+      dataIndex: 'owner',
+      key: 'owner'
     },
     {
-      title: 'Category',
+      title: 'Kategoria',
       dataIndex: 'category',
       key: 'category'
     }
@@ -33,6 +34,7 @@ function DocumentList() {
 
   return (
     <div>
+      {/* Załóżmy, że DocumentNavigationBar i Sidebar to osobne komponenty */}
       <DocumentNavigationBar />
       <Sidebar />
       <div className="table-container">

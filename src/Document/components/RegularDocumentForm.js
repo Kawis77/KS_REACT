@@ -47,7 +47,7 @@ const RegularDocumentForm = () => {
       author: formData.get('author'),
       createDate: formData.get('create-date'),
       location: formData.get('location'),
-      type: formData.get('category'),
+      category: formData.get('category'),
       version: formData.get('version'),
       publicationNote: formData.get('publicationNote'),
       content: editorData

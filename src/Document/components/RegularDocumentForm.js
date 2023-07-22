@@ -32,7 +32,7 @@ const RegularDocumentForm = () => {
       };
       setSummaryData(newSummaryData);
     }
-  };
+  };1``
 
   const onEditorChange = (event, editor) => {
     const data = editor.getData();

@@ -9,11 +9,11 @@ const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [editorData, setEditorData] = useState('');
   const [summaryData, setSummaryData] = useState({});
-
+  const [owner, setOwner] = useState(null);
 
   const handleUserSelected = (user) => {
-    // Tutaj możesz zaktualizować stan z informacjami o wybranym użytkowniku
     console.log('Wybrany użytkownik:', user);
+    setOwner(user);
   };
 
   const handleSelect = (selectedTab) => {
@@ -22,7 +22,7 @@ const RegularDocumentForm = () => {
       const formData = new FormData(document.getElementById('regular-document-form'));
       const newSummaryData = {
         title: formData.get('title'),
-        author: formData.get('author'),
+        owner: owner ? owner.id : null,
         createDate: formData.get('create-date'),
         location: formData.get('location'),
         type: formData.get('category'),
@@ -32,7 +32,7 @@ const RegularDocumentForm = () => {
       };
       setSummaryData(newSummaryData);
     }
-  };1``
+  };
 
   const onEditorChange = (event, editor) => {
     const data = editor.getData();
@@ -44,7 +44,7 @@ const RegularDocumentForm = () => {
     const formData = new FormData(event.target);
     const documentData = {
       title: formData.get('title'),
-      author: formData.get('author'),
+      owner: owner ? owner.id : null,
       createDate: formData.get('create-date'),
       location: formData.get('location'),
       category: formData.get('category'),
@@ -56,10 +56,8 @@ const RegularDocumentForm = () => {
     try {
       const response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
       console.log(response.data);
-      // Obsłuż odpowiedź z serwera, np. czyść formularz lub przekieruj na inną stronę
     } catch (error) {
       console.error(error);
-      // Obsłuż błędy, np. wyświetl komunikat o błędzie
     }
   };
 
@@ -68,7 +66,7 @@ const RegularDocumentForm = () => {
       <Row>
         <Col>
           <p><strong>Tytuł:</strong> {documentData.title}</p>
-          <p><strong>Autor:</strong> {documentData.author}</p>
+          <p><strong>Wlasciciel:</strong> {documentData.owner}</p>
           <p><strong>Data wydania:</strong> {documentData.createDate}</p>
           <p><strong>Lokacja:</strong> {documentData.location}</p>
           <p><strong>Kategoria:</strong> {documentData.category}</p>
@@ -88,7 +86,7 @@ const RegularDocumentForm = () => {
 
   return (
     <div>
-      <Form id='regular-document-form' onSubmit={handleSave}>
+       <Form id='regular-document-form' onSubmit={handleSave}>
         <Tabs activeKey={activeTab} onSelect={handleSelect}>
           <Tab eventKey="tab1" title="Dane">
             <Row>
@@ -99,10 +97,10 @@ const RegularDocumentForm = () => {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="formAuthor">
-                  <Form.Label>Autor</Form.Label>
-                  <UserPicker onUserSelected={handleUserSelected} /> {/* Użycie komponentu UserPicker */}
-                </Form.Group>
+              <Form.Group controlId="formOwner">
+                <Form.Label>Wlasciciel</Form.Label>
+                <UserPicker onUserSelected={handleUserSelected} />
+              </Form.Group>
               </Col>
             </Row>
 
@@ -160,7 +158,7 @@ const RegularDocumentForm = () => {
     <Row>
       <Col>
         <p><strong>Tytuł:</strong> {summaryData.title}</p>
-        <p><strong>Autor:</strong> {summaryData.author}</p>
+        <p><strong>Wlasciciel:</strong> {summaryData.owner}</p>
         <p><strong>Data wydania:</strong> {summaryData.createDate}</p>
         <p><strong>Lokacja:</strong> {summaryData.location}</p>
         <p><strong>Kategoria:</strong> {summaryData.category}</p>

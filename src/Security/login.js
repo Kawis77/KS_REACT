@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -15,20 +16,21 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Wysłanie żądania logowania na backend
-    const data = {
+    const LoginRequest = {
       username: username,
       password: password,
     };
 
-    axios.post('http://localhost:8080/api/security/login', data)
+    axios.post('http://localhost:8080/api/security/customlogin', LoginRequest, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then((response) => {
-        // Pomyślna odpowiedź z backendu (np. dostępny token JWT)
-        console.log(response.data);
-        // Zapisz token JWT w pamięci przeglądarki lub ciasteczku
+        const token = response.data;
+        Cookies.set('loginToken', token, { expires: 0.5 });
       })
       .catch((error) => {
-        // Błąd logowania (np. złe dane logowania)
         console.error(error);
       });
   };

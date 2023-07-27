@@ -55,7 +55,6 @@ const RegularDocumentForm = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

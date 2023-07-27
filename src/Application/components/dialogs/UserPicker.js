@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 import '../../styles/UserPicker.css';
 
 const UserPicker = ({ onUserSelected }) => {
@@ -12,14 +13,15 @@ const UserPicker = ({ onUserSelected }) => {
     fetchUsers();
   }, []);
 
-  const fetchUsers = () => {
-    const exampleUsers = [
-      { id: 1, name: 'Jan Kowalski' },
-      { id: 2, name: 'Anna Nowak' },
-      { id: 3, name: 'Piotr Zieliński' },
-    ];
-
-    setUsers(exampleUsers);
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/user/all/users');
+      const fetchedUsers = response.data;
+      console.log(response.data);
+      setUsers(fetchedUsers);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
   };
 
   const handleUserSelection = (user) => {
@@ -36,7 +38,7 @@ const UserPicker = ({ onUserSelected }) => {
       <Form.Control
         name="selectedUser"
         type="text"
-        value={selectedUser ? selectedUser.name : ''}
+        value={selectedUser ? selectedUser.username : ''}
         onClick={() => setModalIsOpen(true)}
         readOnly
         placeholder="Wybierz użytkownika"
@@ -62,7 +64,7 @@ const UserPicker = ({ onUserSelected }) => {
               className={`user-item ${selectedUser === user ? 'selected' : ''}`}
               onClick={() => handleUserSelection(user)}
             >
-              {user.name}
+             {`${user.name} ${user.surname}`}
             </li>
           ))}
         </ul>
@@ -70,7 +72,8 @@ const UserPicker = ({ onUserSelected }) => {
           <Button variant="primary" className="modal-button" onClick={handleOkButtonClick}>
             OK
           </Button>
-          <Button variant="secondary"
+          <Button
+            variant="secondary"
             className="modal-button"
             onClick={() => setModalIsOpen(false)}
           >

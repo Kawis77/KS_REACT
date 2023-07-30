@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./Application/pages/Home";
 import DocumentList from "./Document/pages/DocumentList";
 import AddDocument from "./Document/pages/AddDocument";
-import Login from "./Security/Login"; 
+import Login from "./Security/Login.js"; 
 
 function App() {
   return (

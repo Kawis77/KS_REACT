@@ -2,50 +2,50 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import '../../styles/dialogs/UserPickerStyle.css';
+import '../../styles/dialogs/LocationPickerStyle.css';
 
-const UserPicker = ({ onUserSelected }) => {
+const LocationPicker = ({ onLocationSelected}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [locations, setLocations] = useState([]);
+  const [selectedLocations, setSelectedLocation] = useState(null);
 
   useEffect(() => {
-    fetchUsers();
+    fetchLocations();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchLocations = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/user/all/users');
-      const fetchedUsers = response.data;
-      setUsers(fetchedUsers);
+      const response = await axios.get('http://localhost:8080/api/menu/component/all');
+      const fetchedLocations = response.data;
+      setLocations(fetchedLocations);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Error fetching locations:', error);
     }
   };
 
-  const handleUserSelection = (user) => {
-    setSelectedUser(user);
+  const handleLocationSelection = (location) => {
+    setSelectedLocation(location);
   };
 
   const handleOkButtonClick = () => {
-    onUserSelected(selectedUser);
+    onLocationSelected(selectedLocations);
     setModalIsOpen(false);
   };
 
   return (
     <>
       <Form.Control
-        name="selectedUser"
+        name="selectedLocation"
         type="text"
-        value={selectedUser ? selectedUser.username : ''}
+        value={selectedLocations ? selectedLocations.name : ''}
         onClick={() => setModalIsOpen(true)}
         readOnly
-        placeholder="Wybierz użytkownika"
+        placeholder="Wybierz lokacje"
       />
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Wybierz użytkownika"
+        contentLabel="Wybierz lokacje"
         style={{
           content: {
             width: '640px',
@@ -55,15 +55,15 @@ const UserPicker = ({ onUserSelected }) => {
           },
         }}
       >
-        <h2>Wybierz użytkownika</h2>
+        <h2>Wybierz lokacje</h2>
         <ul>
-          {users.map((user) => (
+          {locations.map((location) => (
             <li
-              key={user.id}
-              className={`user-item ${selectedUser === user ? 'selected' : ''}`}
-              onClick={() => handleUserSelection(user)}
+              key={location.id}
+              className={`user-item ${selectedLocations === location ? 'selected' : ''}`}
+              onClick={() => handleLocationSelection(location)}
             >
-             {`${user.name} ${user.surname}`}
+             {`${location.name}`}
             </li>
           ))}
         </ul>
@@ -84,4 +84,4 @@ const UserPicker = ({ onUserSelected }) => {
   );
 };
 
-export default UserPicker;
+export default LocationPicker;

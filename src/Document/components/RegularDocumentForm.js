@@ -4,16 +4,23 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UserPicker from '../../Application/components/dialogs/UserPicker'; 
 import axios from 'axios';
+import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 
 const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [editorData, setEditorData] = useState('');
   const [summaryData, setSummaryData] = useState({});
   const [owner, setOwner] = useState(null);
+  const [location, setLocation] = useState(null);
 
   const handleUserSelected = (user) => {
-    console.log('Wybrany użytkownik:', user);
+    console.log('Selected user:', user);
     setOwner(user);
+  };
+
+  const handleLocationSelected = (location) => {
+    console.log('Selected location:', location);
+    setLocation(location);
   };
 
   const handleSelect = (selectedTab) => {
@@ -22,9 +29,9 @@ const RegularDocumentForm = () => {
       const formData = new FormData(document.getElementById('regular-document-form'));
       const newSummaryData = {
         title: formData.get('title'),
-        owner: owner ? owner.id : null,
+        owner: owner ? owner.name : null,
         createDate: formData.get('create-date'),
-        location: formData.get('location'),
+        location: location ? location.name : null,
         type: formData.get('category'),
         version: formData.get('version'),
         publicationNote: formData.get('publicationNote'),
@@ -42,11 +49,12 @@ const RegularDocumentForm = () => {
   const handleSave = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
+    console.log(location);
     const documentData = {
       title: formData.get('title'),
       owner: owner ? owner.id : null,
       createDate: formData.get('create-date'),
-      location: formData.get('location'),
+      location: location ? location.id : null,
       category: formData.get('category'),
       version: formData.get('version'),
       publicationNote: formData.get('publicationNote'),
@@ -113,7 +121,7 @@ const RegularDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formLocation">
                   <Form.Label>Lokacja</Form.Label>
-                  <Form.Control name='location' type="text" placeholder='Ustaw lokacje' />
+                 <LocationPicker onLocationSelected={handleLocationSelected} />
                 </Form.Group>
               </Col>
             </Row>

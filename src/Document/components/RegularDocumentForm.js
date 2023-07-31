@@ -5,6 +5,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UserPicker from '../../Application/components/dialogs/UserPicker'; 
 import axios from 'axios';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
+import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 
 const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -12,6 +13,7 @@ const RegularDocumentForm = () => {
   const [summaryData, setSummaryData] = useState({});
   const [owner, setOwner] = useState(null);
   const [location, setLocation] = useState(null);
+  const [category, setCategory] = useState(null);
 
   const handleUserSelected = (user) => {
     console.log('Selected user:', user);
@@ -23,6 +25,11 @@ const RegularDocumentForm = () => {
     setLocation(location);
   };
 
+  const handleCategorySelected = (category) => {
+    console.log('Selected category:', category);
+    setCategory(category);
+  };
+
   const handleSelect = (selectedTab) => {
     setActiveTab(selectedTab);
     if (selectedTab === 'tab4') {
@@ -32,6 +39,7 @@ const RegularDocumentForm = () => {
         owner: owner ? owner.name : null,
         createDate: formData.get('create-date'),
         location: location ? location.name : null,
+        category: category ? category.name : null,
         type: formData.get('category'),
         version: formData.get('version'),
         publicationNote: formData.get('publicationNote'),
@@ -55,7 +63,7 @@ const RegularDocumentForm = () => {
       owner: owner ? owner.id : null,
       createDate: formData.get('create-date'),
       location: location ? location.id : null,
-      category: formData.get('category'),
+      category: category ? category.id : null,
       version: formData.get('version'),
       publicationNote: formData.get('publicationNote'),
       content: editorData
@@ -128,14 +136,9 @@ const RegularDocumentForm = () => {
 
             <Row>
               <Col>
-                <Form.Group controlId="formType">
+                <Form.Group controlId="formCategory">
                   <Form.Label>Kategoria</Form.Label>
-                  <Form.Control name='category' as="select">
-                    <option>Kategortia1</option>
-                    <option>Kategoria2</option>
-                    <option>Kategoria3</option>
-                    <option>Kategoria4</option>
-                  </Form.Control>
+                  <CategoryPicker onCategorySelected={handleCategorySelected} />
                 </Form.Group>
               </Col>
               <Col>

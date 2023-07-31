@@ -2,50 +2,50 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import '../../styles/dialogs/UserPickerStyle.css';
+import '../../styles/dialogs/CategoryPickerStyle.css';
 
-const UserPicker = ({ onUserSelected }) => {
+const CategoryPicker = ({onCategorySelected}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [categories, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
-    fetchUsers();
+    fetchCategory();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchCategory = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/user/read/all');
-      const fetchedUsers = response.data;
-      setUsers(fetchedUsers);
+      const response = await axios.get('http://localhost:8080/api/category/read/all');
+      const fetchedCategory = response.data;
+      setCategory(fetchedCategory);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Error fetching category:', error);
     }
   };
 
-  const handleUserSelection = (user) => {
-    setSelectedUser(user);
+  const handleCategorySelection = (category) => {
+    setSelectedCategory(category);
   };
 
   const handleOkButtonClick = () => {
-    onUserSelected(selectedUser);
+    onCategorySelected(selectedCategory);
     setModalIsOpen(false);
   };
 
   return (
     <>
       <Form.Control
-        name="selectedUser"
+        name="selectedCategory"
         type="text"
-        value={selectedUser ? selectedUser.username : ''}
+        value={selectedCategory ? selectedCategory.name : ''}
         onClick={() => setModalIsOpen(true)}
         readOnly
-        placeholder="Wybierz użytkownika"
+        placeholder="Wybierz kategorie"
       />
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Wybierz użytkownika"
+        contentLabel="Wybierz kategorie"
         style={{
           content: {
             width: '640px',
@@ -55,15 +55,15 @@ const UserPicker = ({ onUserSelected }) => {
           },
         }}
       >
-        <h2>Wybierz użytkownika</h2>
+        <h2>Wybierz kategorie</h2>
         <ul>
-          {users.map((user) => (
+          {categories.map((categories) => (
             <li
-              key={user.id}
-              className={`user-item ${selectedUser === user ? 'selected' : ''}`}
-              onClick={() => handleUserSelection(user)}
+              key={categories.id}
+              className={`category-item ${selectedCategory === categories ? 'selected' : ''}`}
+              onClick={() => handleCategorySelection(categories)}
             >
-             {`${user.name} ${user.surname}`}
+             {`${categories.name}`}
             </li>
           ))}
         </ul>
@@ -84,4 +84,4 @@ const UserPicker = ({ onUserSelected }) => {
   );
 };
 
-export default UserPicker;
+export default CategoryPicker;

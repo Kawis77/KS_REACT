@@ -60,7 +60,7 @@ const LocationPicker = ({ onLocationSelected}) => {
           {locations.map((location) => (
             <li
               key={location.id}
-              className={`user-item ${selectedLocations === location ? 'selected' : ''}`}
+              className={`location-item ${selectedLocations === location ? 'selected' : ''}`}
               onClick={() => handleLocationSelection(location)}
             >
              {`${location.name}`}

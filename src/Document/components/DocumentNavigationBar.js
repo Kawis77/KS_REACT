@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa';
 import Modal from 'react-modal';
 import axios from 'axios';
 import './../../../src/Document/styles/DocumentNavigationBar.css';
+import { Link } from 'react-router-dom'; // Dodaj ten import
 
 Modal.setAppElement('#root');
 
@@ -52,7 +53,7 @@ function DocumentNavigationBar() {
   const fetchMenuNames = async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/menu/component/all');
-      setMenuNames(response.data.map(item => item.name));
+      setMenuNames(response.data); // Przechowujemy pełne obiekty (zawierające nazwę i id) w tablicy menuNames
     } catch (error) {
       console.error('Błąd podczas pobierania nazw menu:', error);
     }
@@ -64,9 +65,9 @@ function DocumentNavigationBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto justify-content-center">
-            {menuNames.map((name, index) => (
-              <Nav.Link key={index} href="#home">{name}</Nav.Link>
-            ))}
+           {menuNames.map((item) => (
+    <Nav.Link key={item.id} href={`/menu/${item.id}`}>{item.name}</Nav.Link>
+     ))}
           </Nav>
           <Nav>
             <Nav.Link onClick={handleAddComponent} href="#add-document">

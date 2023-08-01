@@ -2,30 +2,37 @@ import React, { useState, useEffect } from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import Sidebar from '../components/Sidebar';
 import { Table } from 'antd';
-import './../../../src/Document/styles/DocumentList.css';
+import './../../../src/Document/styles/MenuDocumentList.css';
+import { useParams } from 'react-router-dom';
 import { FileOutlined } from '@ant-design/icons';
 
-function DocumentList() {
+function MenuComponentDocumentList() {
   const [data, setData] = useState([]);
+  const { id } = useParams();
 
-  useEffect(() => {
-    fetch('http://localhost:8080/api/document/read/all')
+ console.log(id);
+
+ useEffect(() => {
+    // Zostawiamy id jako string - nie potrzeba parsowania
+    fetch(`http://localhost:8080/api/document/read/one/${id}`)
       .then(response => response.json())
-      .then(data => setData(data));
-      console.log();
-  }, []);
+      .then(data => setData(data))
+      .catch(error => {
+        console.error('Błąd podczas pobierania danych:', error);
+      });
+  }, [id]);
 
   const columns = [
     {
-      title: '',
-      dataIndex: '',
-      key: '',
-      render: () => (
-          <span style={{ fontSize: '24px' }}>
-          <FileOutlined />
-        </span>
-      ),
-    },
+        title: '',
+        dataIndex: '',
+        key: '',
+        render: () => (
+            <span style={{ fontSize: '24px' }}>
+            <FileOutlined />
+          </span>
+        ),
+      },
     {
       title: 'Nazwa',
       dataIndex: 'title',
@@ -41,12 +48,6 @@ function DocumentList() {
       title: 'Kategoria',
       dataIndex: 'categoryEntity',
       key: 'category',
-      render: categoryEntity => categoryEntity.name
-    },
-    {
-      title: 'Lokacja',
-      dataIndex: 'location',
-      key: 'location',
       render: categoryEntity => categoryEntity.name
     },
     {
@@ -73,4 +74,4 @@ function DocumentList() {
   );
 }
 
-export default DocumentList;
+export default MenuComponentDocumentList;

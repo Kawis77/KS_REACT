@@ -64,7 +64,7 @@ const RegularDocumentForm = () => {
       createDate: formData.get('create-date'),
       location: location ? location.id : null,
       category: category ? category.id : null,
-      version: formData.get('version'),
+      version: '1',
       publicationNote: formData.get('publicationNote'),
       content: editorData
     };
@@ -142,11 +142,17 @@ const RegularDocumentForm = () => {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="formVersion">
-                  <Form.Label>Wersja</Form.Label>
-                  <Form.Control name='version' type="text" placeholder='Wersja dokumentu' />
-                </Form.Group>
-              </Col>
+        <Form.Group controlId="formVersion">
+          <Form.Label>Wersja</Form.Label>
+          <Form.Control
+            name="version"
+            type="text"
+            placeholder="Wersja dokumentu"
+            value="1" // Ustawia domyślną wartość 1
+            readOnly 
+          />
+        </Form.Group>
+      </Col>
             </Row>
 
             <Form.Group controlId="formPublicationNote">

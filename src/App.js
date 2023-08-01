@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./Application/pages/Home";
 import DocumentList from "./Document/pages/DocumentList";
 import AddDocument from "./Document/pages/AddDocument";
+import MenuComponentDocumentList from './Document/pages/MenuComponentDocumentList';
 import Login from "./Security/Login.js"; 
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
           <Route path="/add-document" element={<AddDocument />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/" element={<Home />} />
+
+          <Route path="/menu/:id" element={<MenuComponentDocumentList />} />
         </Routes>
       </div>
     </BrowserRouter>

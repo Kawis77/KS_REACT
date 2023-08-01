@@ -1,0 +1,5 @@
+.table-container {
+    margin-left: 15%; /* Zaktualizowane z 300px na wartość procentową */
+    width: calc(100% - 15%); /* Zaktualizowane z 300px na wartość procentową */
+    overflow-x: auto;
+  }

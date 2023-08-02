@@ -1,0 +1,80 @@
+/* DocumentType.css */
+
+/* Styl dla całego modalu */
+.ReactModal__Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Półprzezroczyste tło */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .ReactModal__Content {
+    background-color: #fff;
+    border-radius: 4px;
+    outline: none;
+    width: 440px; /* Szerokość modalu */
+    height: 440px; /* Wysokość modalu */
+    margin: auto;
+    overflow: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Styl dla tytułu */
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  
+  /* Styl dla listy */
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow: auto; /* Dodałem overflow, aby w razie potrzeby pojawił się pasek przewijania */
+  }
+  
+  /* Styl dla elementów listy */
+  ul li {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  ul li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  ul li.selected {
+    background-color: #e0e0e0;
+  }
+  
+  /* Styl dla przycisków */
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  .buttons-container button {
+    margin-left: 1rem;
+    cursor: pointer;
+  }
+  
+  .buttons-container button:hover,
+  ul li.selected {
+    background-color: #cce5ff;
+  }
+  

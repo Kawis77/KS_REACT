@@ -4,7 +4,6 @@ import { FaPlus } from 'react-icons/fa';
 import Modal from 'react-modal';
 import axios from 'axios';
 import './../../../src/Document/styles/DocumentNavigationBar.css';
-import { Link } from 'react-router-dom'; // Dodaj ten import
 
 Modal.setAppElement('#root');
 

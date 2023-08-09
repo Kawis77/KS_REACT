@@ -69,9 +69,6 @@ const ExternalDocumentForm = () => {
     };
 
     try {
-
-        console.log(documentData);
-
         const response = await axios.post('http://localhost:8080/api/document/external/create', documentData, {
           headers: {
             'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików

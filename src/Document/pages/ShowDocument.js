@@ -12,7 +12,7 @@ function ShowDocument() {
       <DocumentNavigationBar />
       <Sidebar />
       <div className="show-document-content">
-        <DocumentView documentId={id} />
+        <DocumentView id={id} />
       </div>
     </div>
   );

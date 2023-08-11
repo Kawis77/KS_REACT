@@ -49,7 +49,7 @@ const UserPicker = ({ onUserSelected }) => {
         style={{
           content: {
             width: '640px',
-            height: '640px',
+            height: '440px',
             margin: 'auto',
             overflow: 'auto',
           },

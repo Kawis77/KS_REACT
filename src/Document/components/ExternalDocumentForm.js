@@ -39,7 +39,7 @@ const ExternalDocumentForm = () => {
         location: location ? location.name : null,
         category: category ? category.name : null,
         type: formData.get('category'),
-        version: formData.get('version'),
+        version: '1',
         publicationNote: formData.get('publicationNote'),
         content: editorData
         
@@ -57,6 +57,7 @@ const ExternalDocumentForm = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
     formData.append('documentFile', formData.get('documentFile'));
+    console.log(formData.get('documentFile'));
     const documentData = {
       title: formData.get('title'),
       owner: owner ? owner.id : null,
@@ -65,7 +66,8 @@ const ExternalDocumentForm = () => {
       category: category ? category.id : null,
       version: '1',
       publicationNote: formData.get('publicationNote'),
-      content: editorData
+      content: editorData,
+      documentFile: formData.get('documentFile') // Dodaj przesyłany plik do documentData
     };
 
     try {

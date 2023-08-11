@@ -1,15 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Row, Col } from 'react-bootstrap';
+import './../../../src/Document/styles/DocumentView.css';
 
-const DocumentView = () => {
+const DocumentView = ({ id }) => {
+  const [document, setDocument] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+
+    axios.get(`http://localhost:8080/api/document/read/one/doc/${id}`)
+      .then(response => {
+        setDocument(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Problem with getting documents from the backend', error);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return <p>Ładowanie dokumentów...</p>;
+  }
+
   return (
     <div className="document-container">
-      <p className="document-text">To jest ten dokument</p>
-      ewfdew
-      fetchwe
-      fetchweef
-      Wersjaf
-      Wersjafwe
+      <Container>
+        <Row>
+          <Col md={4}>
+            <div className="document-column">
+              <p className="document-info">Nazwa: {document.title}</p>
+              <p className="document-info">Lokalizacja: {document.location.name}</p>
+            </div>
+          </Col>
+          <Col md={4}>
+            <div className="document-column">
+              <p className="document-info">Data utworzenia: {document.createDate}</p>
+              <p className="document-info">Wersja: {document.version}</p>
       
+            </div>
+          </Col>
+          <Col md={4}>
+            <div className="document-column">
+              <p className="document-info">Notatka publikacyjna: {document.publicationNote}</p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };

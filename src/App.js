@@ -8,6 +8,8 @@ import DocumentList from "./Document/pages/DocumentList";
 import AddDocument from "./Document/pages/AddDocument";
 import MenuComponentDocumentList from './Document/pages/MenuComponentDocumentList';
 import Login from "./Security/Login.js"; 
+import AddExternalDocument from './Document/pages/AddExternalDocument';
+import ShowDocument from './Document/pages/ShowDocument';
 
 function App() {
   return (
@@ -22,10 +24,11 @@ function App() {
           <Route path="/document" element={<DocumentPage />} />
           <Route path="/document-list" element={<DocumentList />} />
           <Route path="/add-document" element={<AddDocument />} />
+          <Route path='/add-external-document' element={<AddExternalDocument/>} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/" element={<Home />} />
-
           <Route path="/menu/:id" element={<MenuComponentDocumentList />} />
+          <Route path="/show-document/:id" element={<ShowDocument />} />
         </Routes>
       </div>
     </BrowserRouter>

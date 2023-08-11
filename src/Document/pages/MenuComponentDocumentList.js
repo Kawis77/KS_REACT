@@ -13,8 +13,7 @@ function MenuComponentDocumentList() {
  console.log(id);
 
  useEffect(() => {
-    // Zostawiamy id jako string - nie potrzeba parsowania
-    fetch(`http://localhost:8080/api/document/read/one/${id}`)
+    fetch(`http://localhost:8080/api/document/read/menu/${id}`)
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => {
@@ -64,7 +63,6 @@ function MenuComponentDocumentList() {
 
   return (
     <div>
-      {/* Załóżmy, że DocumentNavigationBar i Sidebar to osobne komponenty */}
       <DocumentNavigationBar />
       <Sidebar />
       <div className="table-container">

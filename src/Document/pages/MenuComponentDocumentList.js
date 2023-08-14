@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import Sidebar from '../components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
 import './../../../src/Document/styles/MenuDocumentList.css';
 import { useParams } from 'react-router-dom';
 import { FileOutlined } from '@ant-design/icons';
 
 function MenuComponentDocumentList() {
+
+  const navigate = useNavigate();
+
   const [data, setData] = useState([]);
   const { id } = useParams();
 
@@ -66,10 +70,19 @@ function MenuComponentDocumentList() {
       <DocumentNavigationBar />
       <Sidebar />
       <div className="table-container">
-        <Table dataSource={data} columns={columns} />
+        <Table
+          dataSource={data}
+          columns={columns}
+          onRow={(record) => ({
+            onDoubleClick: () => {
+              navigate(`/show-document/${record.id}`); // Zmień ścieżkę na '/document/:id'
+            },
+          })}
+        />
       </div>
     </div>
   );
 }
+
 
 export default MenuComponentDocumentList;

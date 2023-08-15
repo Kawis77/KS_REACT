@@ -4,25 +4,25 @@ import './../../../src/Document/styles/OptionMenuDocument.css';
 import { FileOutlined, EditOutlined, ExportOutlined, DeleteOutlined } from '@ant-design/icons'; // Importuj ikony
 
 
-function OptionMenuDocument() {
+function OptionMenuDocument({id}) {
 
   return (
     <div className="option-menu">
       <h4 className="option-menu-title">Zarzadzaj dokumentem</h4>
       <ul>
         <li>
-          <NavLink to="/edit-document">
+        <NavLink to={`/edit-one-document/${id}`}>
           <EditOutlined className="nav-icon" />
             Edytuj dokument</NavLink>
         </li>
         <li>
-          <NavLink to="/move-document">
-          <ExportOutlined className="nav-icon" /> {/* Dodaj ikonę po prawej stronie */}
+          <NavLink to="/move-one-document">
+          <ExportOutlined className="nav-icon" /> 
             Przenies dokument</NavLink>
         </li>
         <li>
-          <NavLink to="/delete-document">
-          <DeleteOutlined className="nav-icon" /> {/* Dodaj ikonę po prawej stronie */}
+          <NavLink to="/delete-one-document">
+          <DeleteOutlined className="nav-icon" /> 
             Usun dokument</NavLink>
         </li>
       </ul>

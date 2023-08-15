@@ -1,4 +1,3 @@
-import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
@@ -14,8 +13,8 @@ function ShowDocument() {
       <Sidebar />
       <div className="show-document-content">
         <DocumentView id={id} />
+        <OptionMenuDocument id={id} /> {/* Poprawione przekazanie id */}
       </div>
-      <OptionMenuDocument/>
     </div>
   );
 }

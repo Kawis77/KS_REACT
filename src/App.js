@@ -10,6 +10,7 @@ import MenuComponentDocumentList from './Document/pages/MenuComponentDocumentLis
 import Login from "./Security/Login.js"; 
 import AddExternalDocument from './Document/pages/AddExternalDocument';
 import ShowDocument from './Document/pages/ShowDocument';
+import EditDocument from './Document/pages/EditDocument';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} /> 
           <Route path="/" element={<Home />} />
           <Route path="/menu/:id" element={<MenuComponentDocumentList />} />
+          <Route path="/edit-one-document/:id" element={<EditDocument/>} />
           <Route path="/show-document/:id" element={<ShowDocument />} />
         </Routes>
       </div>

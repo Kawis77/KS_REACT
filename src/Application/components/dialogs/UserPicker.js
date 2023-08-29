@@ -4,14 +4,18 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import '../../styles/dialogs/UserPickerStyle.css';
 
-const UserPicker = ({ onUserSelected }) => {
+const UserPicker = ({ onUserSelected, defaultValue }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+    if (defaultValue) {
+      const defaultUser = users.find(user => user.id === defaultValue);
+      setSelectedUser(defaultUser);
+    }
+  }, [defaultValue]);
 
   const fetchUsers = async () => {
     try {
@@ -37,7 +41,7 @@ const UserPicker = ({ onUserSelected }) => {
       <Form.Control
         name="selectedUser"
         type="text"
-        value={selectedUser ? selectedUser.username : ''}
+        value={selectedUser ? `${selectedUser.name} ${selectedUser.surname}` : ''}
         onClick={() => setModalIsOpen(true)}
         readOnly
         placeholder="Wybierz użytkownika"

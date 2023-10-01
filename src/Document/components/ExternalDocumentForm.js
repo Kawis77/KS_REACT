@@ -162,7 +162,6 @@ const ExternalDocumentForm = () => {
    <Col>
     <Form.Group controlId="formFile">
     <Form.Label>Dołącz plik</Form.Label>
-    <Form.Text>Dodaj plik tutaj.</Form.Text> {/* Opis dodany na górze */}
       <Form.Control name="documentFile" type="file" />
     </Form.Group>
   </Col>

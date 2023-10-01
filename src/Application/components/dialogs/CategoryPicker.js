@@ -4,14 +4,18 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import '../../styles/dialogs/CategoryPickerStyle.css';
 
-const CategoryPicker = ({onCategorySelected}) => {
+const CategoryPicker = ({onCategorySelected , defaultValue}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [categories, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     fetchCategory();
-  }, []);
+    if(defaultValue){
+      const defaultCategory = categories.find(category => category.id === defaultValue)
+      setSelectedCategory(defaultCategory);
+    }
+  }, [defaultValue]);
 
   const fetchCategory = async () => {
     try {

@@ -2,7 +2,7 @@ import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import EditDocumentForm from '../components/EditDocumentForm';
+import EditDocumentForm from '../components/EditExternalDocumentForm';
 
 function EditDocument(
 

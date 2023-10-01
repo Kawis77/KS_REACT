@@ -4,14 +4,18 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import '../../styles/dialogs/LocationPickerStyle.css';
 
-const LocationPicker = ({ onLocationSelected}) => {
+const LocationPicker = ({ onLocationSelected , defaultValue}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [locations, setLocations] = useState([]);
   const [selectedLocations, setSelectedLocation] = useState(null);
 
   useEffect(() => {
     fetchLocations();
-  }, []);
+    if(defaultValue){
+      const defaultLocation = locations.find(location => location.id === defaultValue)
+      setSelectedLocation(defaultLocation);
+    }
+  }, [defaultValue]);
 
   const fetchLocations = async () => {
     try {

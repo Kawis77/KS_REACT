@@ -51,11 +51,10 @@ const DocumentView = ({ id }) => {
           </Row>
         </Container>
       </div>
-      <div className="document-view">
-      <iframe src={`http://localhost:8080/api/document/show/one/${document.path}`} width="100%" height="800" title="Dokument" />
-      </div>
+   <div className="document-view">
+   <iframe src={`http://localhost:8080/api/document/show/one/${document.path}`} width="100%" height="800" title="Dokument" />
+   </div>
     </div>
   );
 };
-
 export default DocumentView;

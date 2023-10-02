@@ -1,0 +1,35 @@
+.container-fluid {
+    position: relative;
+    height: 700px;
+}
+
+.container-fluid::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: black;
+    transform: translateX(-50%);
+    z-index: 1; /* Jeśli inne elementy mają być nad tą linią */
+}
+
+.nav-tabs {
+    display: flex; /* Ustawienie karty w jednym rzędzie */
+    justify-content: space-between; /* Równomierny odstęp między kartami */
+    overflow: hidden;
+  }
+  
+  .nav-tabs .nav-item {
+    flex: 1; /* Rozciągnij każdą kartę, aby zajmować równą ilość miejsca */
+    text-align: center; /* Wyśrodkuj tekst na karcie */
+    background-color: lightgray;
+  }
+  
+  .nav-tabs .nav-link {
+    border: none; /* Usuń obramowanie z linków na kartach */
+    background-color: #979191; /* Usuń tło z linków na kartach */
+    padding: 10px; /* Dodaj wypełnienie do linków na kartach */
+    width: 100%;
+  }

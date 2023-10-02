@@ -4,7 +4,7 @@ import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import UserPicker from '../../Application/components/dialogs/UserPicker';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
-import './../../../src/Document/styles/EditExternalDocumentForm.css';
+import './../../../src/Document/styles/ExternalDocumentForm.css';
 
 const EditExternalDocumentForm = ({ id }) => {
   const [documentt, setDocument] = useState({});
@@ -19,7 +19,7 @@ const EditExternalDocumentForm = ({ id }) => {
 
     title: '',
     owner: '',
-    ownerName:'',
+    ownerName: '',
     createDate: '',
     location: '',
     locationID: '',
@@ -58,12 +58,12 @@ const EditExternalDocumentForm = ({ id }) => {
         setSummaryData({
           title: fetchedDocument.title,
           owner: fetchedDocument.owner.id,
-          ownerName:fetchedDocument.owner.name,
+          ownerName: fetchedDocument.owner.name,
           createDate: fetchedDocument.createDate,
           location: fetchedDocument.location.name,
-          locationID:fetchedDocument.location.id,
+          locationID: fetchedDocument.location.id,
           category: fetchedDocument.categoryEntity.name,
-          categoryID:fetchedDocument.categoryEntity.id,
+          categoryID: fetchedDocument.categoryEntity.id,
           version: fetchedDocument.version,
           publicationNote: fetchedDocument.publicationNote,
           path: fetchedDocument.path
@@ -82,7 +82,6 @@ const EditExternalDocumentForm = ({ id }) => {
   }, [summaryData]);
 
   const handleSave = async (event) => {
-
     event.preventDefault();
     const formData = new FormData(event.target);
     formData.append('documentFile', formData.get('documentFile'));
@@ -111,7 +110,6 @@ const EditExternalDocumentForm = ({ id }) => {
   };
 
   const handleSelect = (selectedTab) => {
-
     setActiveTab(selectedTab);
     if (selectedTab === 'tab4') {
       const formData = new FormData(document.getElementById('external-document-form'));
@@ -123,7 +121,7 @@ const EditExternalDocumentForm = ({ id }) => {
         location: summaryData.location ? summaryData.location : null,
         locationID: summaryData.locationID ? summaryData.locationID : null,
         category: summaryData.category ? summaryData.category : null,
-        categoryID : summaryData.categoryID ? summaryData.categoryID : null,
+        categoryID: summaryData.categoryID ? summaryData.categoryID : null,
         type: formData.get('category'),
         version: formData.get('version'),
         publicationNote: formData.get('publicationNote'),
@@ -137,15 +135,12 @@ const EditExternalDocumentForm = ({ id }) => {
 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
-
     if (selectedFile) {
       // Odczytaj zawartość pliku jako URL
       const fileURL = URL.createObjectURL(selectedFile);
-
       // Prześlij plik na serwer
       const formData = new FormData();
       formData.append('file', selectedFile);
-
       try {
         const response = await axios.post('http://localhost:8080/api/file/save', formData, {
           headers: {
@@ -153,12 +148,9 @@ const EditExternalDocumentForm = ({ id }) => {
           },
         });
         const uploadedFilePath = response.data;
-
         setSummaryData({
           ...summaryData,
           path: uploadedFilePath, // Ustaw ścieżkę przesłanego pliku w stanie
-
-
         });
         const iframe = document.getElementById('file-content').querySelector('iframe');
         iframe.src = iframe.src;
@@ -168,11 +160,10 @@ const EditExternalDocumentForm = ({ id }) => {
     }
   };
 
-
   return (
     <div>
       <Form id="external-document-form" onSubmit={handleSave}>
-        <Tabs activeKey={activeTab} onSelect={handleSelect}>
+        <Tabs activeKey={activeTab} onSelect={handleSelect} className="nav-tabs">
           <Tab eventKey="tab1" title="Dane">
             <Row>
               <Col>
@@ -215,7 +206,7 @@ const EditExternalDocumentForm = ({ id }) => {
                 <Form.Group controlId="formVersion">
                   <Form.Label>Wersja</Form.Label>
                   <Form.Control
-                   name="version"
+                    name="version"
                     type="text"
                     placeholder="Wersja dokumentu"
                     value={summaryData.version + 1} // Ustawia domyślną wartość 1
@@ -264,10 +255,8 @@ const EditExternalDocumentForm = ({ id }) => {
                     Zapisz
                   </Button>
                   <div id='file-view'>
-
                   </div>
                 </div>
-
                 <div id='file-content' class='col-6'>
                   <iframe src={`http://localhost:8080/api/document/show/one/${summaryData.path}`} width="100%" height="600" title="Dokument" />
                 </div>

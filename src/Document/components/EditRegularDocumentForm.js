@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import UserPicker from '../../Application/components/dialogs/UserPicker';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
 
-const EditExternalDocumentForm = ({ id }) => {
+const EditRegularDocumentForm = ({ id }) => {
   const [documentt, setDocument] = useState({});
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('tab1');
@@ -45,6 +47,10 @@ const EditExternalDocumentForm = ({ id }) => {
     setCategory(category);
   };
 
+  const onEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setEditorData(data);
+  };
   useEffect(() => {
     setLoading(true);
 
@@ -112,7 +118,7 @@ const EditExternalDocumentForm = ({ id }) => {
   const handleSelect = (selectedTab) => {
     setActiveTab(selectedTab);
     if (selectedTab === 'tab4') {
-      const formData = new FormData(document.getElementById('external-document-form'));
+      const formData = new FormData(document.getElementById('regular-document-form'));
       const newSummaryData = {
         title: formData.get('title'),
         owner: summaryData.ownerName ? summaryData.ownerName : null,
@@ -132,37 +138,9 @@ const EditExternalDocumentForm = ({ id }) => {
     }
   };
 
-
-  const handleFileChange = async (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      // Odczytaj zawartość pliku jako URL
-      const fileURL = URL.createObjectURL(selectedFile);
-      // Prześlij plik na serwer
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      try {
-        const response = await axios.post('http://localhost:8080/api/file/save', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        const uploadedFilePath = response.data;
-        setSummaryData({
-          ...summaryData,
-          path: uploadedFilePath, // Ustaw ścieżkę przesłanego pliku w stanie
-        });
-        const iframe = document.getElementById('file-content').querySelector('iframe');
-        iframe.src = iframe.src;
-      } catch (error) {
-        console.error('Błąd przesyłania pliku na serwer', error);
-      }
-    }
-  };
-
   return (
     <div>
-      <Form id="external-document-form" onSubmit={handleSave}>
+      <Form id="regular-document-form" onSubmit={handleSave}>
         <Tabs activeKey={activeTab} onSelect={handleSelect} className="nav-tabs">
           <Tab eventKey="tab1" title="Dane">
             <Row>
@@ -222,28 +200,18 @@ const EditExternalDocumentForm = ({ id }) => {
             </Form.Group>
           </Tab>
           <Tab eventKey="tab2" title="Kontent">
-            <div class="container-fluid">
-              <Row>
-                <div id='file-upload' class='col-6'>
-                  <Form.Group controlId="formFile">
-                    <Form.Label>Dołącz plik</Form.Label>
-                    <Form.Control name="documentFile" type="file" onChange={handleFileChange} />
-                  </Form.Group>
-                </div>
-                <div id='file-content' class='col-6'>
-                  <iframe src={`http://localhost:8080/api/document/show/one/${summaryData.path}`} width="100%" height="600" title="Dokument" />
-                </div>
-              </Row>
-            </div>
+            <CKEditor
+              editor={ClassicEditor}
+              data={editorData}
+              onChange={onEditorChange}
+            />
           </Tab>
           <Tab eventKey="tab3" title="Dostęp">
             {/* Content of the Access tab */}
           </Tab>
           <Tab eventKey="tab4" title="Podsumowanie">
-
-            <div class="container-fluid">
               <Row>
-                <div className='col-6' id='summary-view'>
+                <Col>
                   <p><strong>Tytuł:</strong> {summaryEditData.title}</p>
                   <p><strong>Właściciel:</strong> {summaryEditData.owner}</p>
                   <p><strong>Data wydania:</strong> {summaryEditData.createDate}</p>
@@ -254,14 +222,17 @@ const EditExternalDocumentForm = ({ id }) => {
                   <Button className="save-button" variant="primary" type="submit" >
                     Zapisz
                   </Button>
-                  <div id='file-view'>
-                  </div>
-                </div>
-                <div id='file-content' class='col-6'>
-                  <iframe src={`http://localhost:8080/api/document/show/one/${summaryData.path}`} width="100%" height="600" title="Dokument" />
-                </div>
+                  </Col>
+                  <Col>
+                  <CKEditor
+          editor={ClassicEditor}
+          data={summaryData.content}
+          readOnly={true}
+        />
+                  
+                  </Col>
               </Row>
-            </div>
+
           </Tab>
         </Tabs>
       </Form>
@@ -269,4 +240,4 @@ const EditExternalDocumentForm = ({ id }) => {
   );
 };
 
-export default EditExternalDocumentForm;
+export default EditRegularDocumentForm;

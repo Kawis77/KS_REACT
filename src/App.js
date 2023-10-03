@@ -29,8 +29,8 @@ function App() {
           <Route path="/login" element={<Login />} /> 
           <Route path="/" element={<Home />} />
           <Route path="/menu/:id" element={<MenuComponentDocumentList />} />
-          <Route path="/edit-one-document/:id" element={<EditDocument/>} />
-          <Route path="/show-document/:id" element={<ShowDocument />} />
+          <Route path="/edit-one-document/:id/:type" element={<EditDocument/>} />
+          <Route path="/show-document/:id/:type" element={<ShowDocument />} />
         </Routes>
       </div>
     </BrowserRouter>

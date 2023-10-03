@@ -4,7 +4,7 @@ import UserPicker from '../../Application/components/dialogs/UserPicker';
 import axios from 'axios';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
-import './../../../src/Document/styles/ExternalDocumentForm.css';
+import './../../../src/Document/styles/DocumentForm.css';
 
 const ExternalDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -108,7 +108,7 @@ const ExternalDocumentForm = () => {
   return (
     <div>
       <Form id='external-document-form' onSubmit={handleSave}>
-        <Tabs activeKey={activeTab} onSelect={handleSelect} variant='pils'>
+        <Tabs activeKey={activeTab} onSelect={handleSelect} className='nav-tabs'>
           <Tab eventKey="tab1" title="Dane">
             <Row>
               <Col>

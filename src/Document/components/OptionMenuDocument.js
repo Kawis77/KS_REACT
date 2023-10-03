@@ -4,14 +4,15 @@ import './../../../src/Document/styles/OptionMenuDocument.css';
 import { FileOutlined, EditOutlined, ExportOutlined, DeleteOutlined } from '@ant-design/icons'; // Importuj ikony
 
 
-function OptionMenuDocument({id}) {
+function OptionMenuDocument({id , type}) {
 
+   console.log(type);
   return (
     <div className="option-menu">
       <h4 className="option-menu-title">Zarzadzaj dokumentem</h4>
       <ul>
         <li>
-        <NavLink to={`/edit-one-document/${id}`}>
+        <NavLink to={`/edit-one-document/${id}/${type}`}>
           <EditOutlined className="nav-icon" />
             Edytuj dokument</NavLink>
         </li>

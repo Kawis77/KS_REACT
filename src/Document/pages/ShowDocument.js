@@ -6,14 +6,14 @@ import './../../../src/Document/styles/ShowDocument.css';
 import OptionMenuDocument from '../components/OptionMenuDocument';
 
 function ShowDocument() {
-  const { id } = useParams();
+  const { id , type } = useParams();
   return (
     <div>
       <DocumentNavigationBar />
       <Sidebar />
       <div className="show-document-content">
         <DocumentView id={id} />
-        <OptionMenuDocument id={id} /> {/* Poprawione przekazanie id */}
+        <OptionMenuDocument id={id} type={type} /> {/* Poprawione przekazanie id */}
       </div>
     </div>
   );

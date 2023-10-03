@@ -74,7 +74,7 @@ function DocumentList() {
           columns={columns}
           onRow={(record) => ({
             onDoubleClick: () => {
-              navigate(`/show-document/${record.id}`); // Zmień ścieżkę na '/document/:id'
+              navigate(`/show-document/${record.id}/${record.type}`); // Zmień ścieżkę na '/document/:id'
             },
           })}
         />

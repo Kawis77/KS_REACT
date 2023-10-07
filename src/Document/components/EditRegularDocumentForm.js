@@ -18,7 +18,6 @@ const EditRegularDocumentForm = ({ id }) => {
   const [category, setCategory] = useState(null);
   const [summaryEditData, setSummaryEditData] = useState({});
   const [summaryData, setSummaryData] = useState({
-
     title: '',
     owner: '',
     ownerName: '',
@@ -30,6 +29,7 @@ const EditRegularDocumentForm = ({ id }) => {
     version: '',
     publicationNote: '',
     path: '',
+    content: ''
   });
 
   const handleUserSelected = (user) => {
@@ -72,20 +72,19 @@ const EditRegularDocumentForm = ({ id }) => {
           categoryID: fetchedDocument.categoryEntity.id,
           version: fetchedDocument.version,
           publicationNote: fetchedDocument.publicationNote,
-          path: fetchedDocument.path
+          path: fetchedDocument.path,
+          content: fetchedDocument.content
         });
-        console.log(summaryData);
       })
-
       .catch(error => {
         console.error('Problem with getting documents from the backend', error);
         setLoading(false);
       });
   }, [id]);
 
-  useEffect(() => {
-    console.log(summaryData); // To pokaże zaktualizowane dane
-  }, [summaryData]);
+
+
+
 
   const handleSave = async (event) => {
     event.preventDefault();
@@ -105,7 +104,7 @@ const EditRegularDocumentForm = ({ id }) => {
     };
     try {
       console.log(documentData);
-      const response = await axios.post('http://localhost:8080/api/document/external/update', documentData, {
+      const response = await axios.post('http://localhost:8080/api/document/regular/update', documentData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
@@ -202,7 +201,7 @@ const EditRegularDocumentForm = ({ id }) => {
           <Tab eventKey="tab2" title="Kontent">
             <CKEditor
               editor={ClassicEditor}
-              data={editorData}
+              data={summaryData.content}
               onChange={onEditorChange}
             />
           </Tab>
@@ -223,13 +222,11 @@ const EditRegularDocumentForm = ({ id }) => {
                     Zapisz
                   </Button>
                   </Col>
-                  <Col>
+                  <Col style={{ pointerEvents: 'none' }}>
                   <CKEditor
           editor={ClassicEditor}
-          data={summaryData.content}
-          readOnly={true}
+          data={summaryEditData.content}
         />
-                  
                   </Col>
               </Row>
 

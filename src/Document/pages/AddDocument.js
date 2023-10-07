@@ -2,7 +2,7 @@ import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import Sidebar from '../components/Sidebar';
 import RegularDocumentForm from '../components/RegularDocumentForm';
-import './../../../src/Document/styles/AddDocument.css';
+import './../../../src/Document/styles/DocumentForm.css';
 
 function AddDocument() {
   return (

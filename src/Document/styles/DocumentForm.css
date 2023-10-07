@@ -33,3 +33,10 @@
     padding: 10px; /* Dodaj wypełnienie do linków na kartach */
     width: 100%;
   }
+
+  .add-form-content{
+    width: 70%;
+    background-color: whitesmoke;
+    margin-left: 300px;
+    margin-top: 10px;
+    }

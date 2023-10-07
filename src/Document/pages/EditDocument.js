@@ -6,12 +6,9 @@ import EditRegularlDocumentForm from '../components/EditRegularDocumentForm';
 import EditExternalDocumentForm from '../components/EditExternalDocumentForm';
 
 function EditDocument(
-
-
 ) {
   const { id , type } = useParams();
-  debugger;
-  if(type === 1){
+  if(type === '1'){
   return (
     <div>
       <DocumentNavigationBar />

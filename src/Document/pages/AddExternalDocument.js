@@ -2,7 +2,7 @@ import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import Sidebar from '../components/Sidebar';
 import ExternalDocumentForm from '../components/ExternalDocumentForm';
-import './../../../src/Document/styles/AddDocument.css';
+import './../../../src/Document/styles/DocumentForm.css';
 
 function AddExternalDocument() {
   return (

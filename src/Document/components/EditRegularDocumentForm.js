@@ -82,10 +82,6 @@ const EditRegularDocumentForm = ({ id }) => {
       });
   }, [id]);
 
-
-
-
-
   const handleSave = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);

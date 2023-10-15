@@ -7,6 +7,7 @@ import axios from 'axios';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
+import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 
 const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -58,7 +59,6 @@ const RegularDocumentForm = () => {
   const handleSave = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    console.log(location);
     const documentData = {
       title: formData.get('title'),
       owner: owner ? owner.id : null,
@@ -72,6 +72,9 @@ const RegularDocumentForm = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
+      if (Array.isArray(response.data)){
+      FieldsValidate(response.data);
+      }
     } catch (error) {
       console.error(error);
     }

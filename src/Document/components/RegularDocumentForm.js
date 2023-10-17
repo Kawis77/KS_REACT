@@ -9,6 +9,7 @@ import CategoryPicker from '../../Application/components/dialogs/CategoryPicker'
 import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 
+
 const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [editorData, setEditorData] = useState('');
@@ -16,6 +17,9 @@ const RegularDocumentForm = () => {
   const [owner, setOwner] = useState(null);
   const [location, setLocation] = useState(null);
   const [category, setCategory] = useState(null);
+
+  const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
 
   const handleUserSelected = (user) => {
     console.log('Selected user:', user);
@@ -45,7 +49,7 @@ const RegularDocumentForm = () => {
         type: formData.get('category'),
         version: formData.get('version'),
         publicationNote: formData.get('publicationNote'),
-        content: editorData
+        content: editorData,
       };
       setSummaryData(newSummaryData);
     }
@@ -67,13 +71,16 @@ const RegularDocumentForm = () => {
       category: category ? category.id : null,
       version: '1',
       publicationNote: formData.get('publicationNote'),
-      content: editorData
+      content: editorData,
     };
 
     try {
       const response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
-      if (Array.isArray(response.data)){
-      FieldsValidate(response.data);
+      if (Array.isArray(response.data)) {
+        // Ustaw błędy walidacji
+        setValidationErrors(response.data);
+        // Otwórz modal z błędami
+        setShowValidationErrorModal(true);
       }
     } catch (error) {
       console.error(error);
@@ -102,6 +109,7 @@ const RegularDocumentForm = () => {
       </Row>
     </div>
   );
+
   return (
     <div>
        <Form id='regular-document-form' onSubmit={handleSave}>
@@ -199,6 +207,13 @@ const RegularDocumentForm = () => {
 </Tab>
         </Tabs>
       </Form>
+      {showValidationErrorModal && (
+        <FieldsValidate
+          isOpen={showValidationErrorModal}
+          onRequestClose={() => setShowValidationErrorModal(false)}
+          validationErrors={validationErrors}
+        />
+      )}
     </div>
   );
 };

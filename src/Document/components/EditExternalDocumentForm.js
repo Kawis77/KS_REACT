@@ -5,6 +5,7 @@ import UserPicker from '../../Application/components/dialogs/UserPicker';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
+import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 
 const EditExternalDocumentForm = ({ id }) => {
   const [documentt, setDocument] = useState({});
@@ -15,6 +16,8 @@ const EditExternalDocumentForm = ({ id }) => {
   const [location, setLocation] = useState(null);
   const [category, setCategory] = useState(null);
   const [summaryEditData, setSummaryEditData] = useState({});
+  const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const [summaryData, setSummaryData] = useState({
 
     title: '',
@@ -29,6 +32,8 @@ const EditExternalDocumentForm = ({ id }) => {
     publicationNote: '',
     path: '',
   });
+
+  
 
   const handleUserSelected = (user) => {
     console.log('Selected user:', user);
@@ -265,6 +270,13 @@ const EditExternalDocumentForm = ({ id }) => {
           </Tab>
         </Tabs>
       </Form>
+      {showValidationErrorModal && (
+        <FieldsValidate
+          isOpen={showValidationErrorModal}
+          onRequestClose={() => setShowValidationErrorModal(false)}
+          validationErrors={validationErrors}
+        />
+      )}
     </div>
   );
 };

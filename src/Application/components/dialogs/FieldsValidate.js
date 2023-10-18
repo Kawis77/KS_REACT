@@ -6,7 +6,6 @@ const FieldsValidate = ({ isOpen, onRequestClose, validationErrors }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      // Dodaj odpowiednie style dla modala
       style={{
         content: {
           height: '30%',

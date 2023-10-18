@@ -5,6 +5,7 @@ import axios from 'axios';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
+import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 
 const ExternalDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -14,6 +15,9 @@ const ExternalDocumentForm = () => {
   const [location, setLocation] = useState(null);
   const [category, setCategory] = useState(null);
   const [path , setPath] = useState(null);
+
+  const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
 
   const handleUserSelected = (user) => {
     console.log(user);
@@ -69,10 +73,17 @@ const ExternalDocumentForm = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/api/document/external/create', documentData, {
+
         headers: {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
       });
+      if (Array.isArray(response.data)) {
+        // Ustaw błędy walidacji
+        setValidationErrors(response.data);
+        // Otwórz modal z błędami
+        setShowValidationErrorModal(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -208,6 +219,13 @@ const ExternalDocumentForm = () => {
 </Tab>
         </Tabs>
       </Form>
+      {showValidationErrorModal && (
+        <FieldsValidate
+          isOpen={showValidationErrorModal}
+          onRequestClose={() => setShowValidationErrorModal(false)}
+          validationErrors={validationErrors}
+        />
+      )}
     </div>
   );
 };

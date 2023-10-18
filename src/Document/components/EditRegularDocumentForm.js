@@ -7,6 +7,7 @@ import UserPicker from '../../Application/components/dialogs/UserPicker';
 import LocationPicker from '../../Application/components/dialogs/LocationPicker';
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
+import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 
 const EditRegularDocumentForm = ({ id }) => {
   const [documentt, setDocument] = useState({});
@@ -17,6 +18,8 @@ const EditRegularDocumentForm = ({ id }) => {
   const [location, setLocation] = useState(null);
   const [category, setCategory] = useState(null);
   const [summaryEditData, setSummaryEditData] = useState({});
+  const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const [summaryData, setSummaryData] = useState({
     title: '',
     owner: '',
@@ -105,6 +108,12 @@ const EditRegularDocumentForm = ({ id }) => {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
       });
+      if (Array.isArray(response.data)) {
+        // Ustaw błędy walidacji
+        setValidationErrors(response.data);
+        // Otwórz modal z błędami
+        setShowValidationErrorModal(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -225,10 +234,16 @@ const EditRegularDocumentForm = ({ id }) => {
         />
                   </Col>
               </Row>
-
           </Tab>
         </Tabs>
       </Form>
+      {showValidationErrorModal && (
+        <FieldsValidate
+          isOpen={showValidationErrorModal}
+          onRequestClose={() => setShowValidationErrorModal(false)}
+          validationErrors={validationErrors}
+        />
+      )}
     </div>
   );
 };

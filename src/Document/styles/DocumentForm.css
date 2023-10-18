@@ -2,19 +2,6 @@
     position: relative;
     height: 700px;
 }
-
-.container-fluid::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background-color: black;
-    transform: translateX(-50%);
-    z-index: 1; /* Jeśli inne elementy mają być nad tą linią */
-}
-
 .nav-tabs {
     display: flex; /* Ustawienie karty w jednym rzędzie */
     justify-content: space-between; /* Równomierny odstęp między kartami */

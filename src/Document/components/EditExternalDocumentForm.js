@@ -33,20 +33,15 @@ const EditExternalDocumentForm = ({ id }) => {
     path: '',
   });
 
-  
-
   const handleUserSelected = (user) => {
-    console.log('Selected user:', user);
     setOwner(user);
   };
 
   const handleLocationSelected = (location) => {
-    console.log('Selected location:', location);
     setLocation(location);
   };
 
   const handleCategorySelected = (category) => {
-    console.log('Selected category:', category);
     setCategory(category);
   };
 
@@ -73,9 +68,7 @@ const EditExternalDocumentForm = ({ id }) => {
           publicationNote: fetchedDocument.publicationNote,
           path: fetchedDocument.path
         });
-        console.log(summaryData);
       })
-
       .catch(error => {
         console.error('Problem with getting documents from the backend', error);
         setLoading(false);
@@ -92,23 +85,26 @@ const EditExternalDocumentForm = ({ id }) => {
     formData.append('documentFile', formData.get('documentFile'));
     const documentData = {
       id: id,
-      title: summaryEditData.title,
+      title: summaryEditData.title.trim() === '' ? null : summaryEditData.title,
       owner: owner ? owner.id : summaryEditData.ownerID,
-      createDate: summaryData.createDate,
+      createDate: summaryData.createDate.trim() === '' ? null : summaryData.createDate,
       location: location ? location.id : summaryEditData.locationID,
       category: category ? category.id : summaryEditData.categoryID,
       version: summaryEditData.version,
-      publicationNote: summaryEditData.publicationNote,
+      publicationNote: summaryEditData.publicationNote.trim() === '' ? null : summaryData.publicationNote,
       content: editorData,
       documentFile: formData.get('documentFile') // Dodaj przesyłany plik do documentData
     };
     try {
-      console.log(documentData);
       const response = await axios.post('http://localhost:8080/api/document/external/update', documentData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
       });
+      if (Array.isArray(response.data)) {
+        setValidationErrors(response.data);
+        setShowValidationErrorModal(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -136,7 +132,6 @@ const EditExternalDocumentForm = ({ id }) => {
       setSummaryEditData(newSummaryData);
     }
   };
-
 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];

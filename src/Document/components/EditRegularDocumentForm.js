@@ -91,13 +91,13 @@ const EditRegularDocumentForm = ({ id }) => {
     formData.append('documentFile', formData.get('documentFile'));
     const documentData = {
       id: id,
-      title: summaryEditData.title,
+      title: summaryEditData.title.trim() === '' ? null : summaryEditData.title,
       owner: owner ? owner.id : summaryEditData.ownerID,
-      createDate: summaryData.createDate,
+      createDate: summaryData.createDate.trim() === '' ? null : summaryData.createDate,
       location: location ? location.id : summaryEditData.locationID,
       category: category ? category.id : summaryEditData.categoryID,
       version: summaryEditData.version,
-      publicationNote: summaryEditData.publicationNote,
+      publicationNote: summaryEditData.publicationNote.trim() === '' ? null : summaryData.publicationNote,
       content: editorData,
       documentFile: formData.get('documentFile') // Dodaj przesyłany plik do documentData
     };

@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import '../../styles/dialogs/LocationPickerStyle.css';
 
-const LocationPicker = ({ onLocationSelected , defaultValue}) => {
+const LocationPicker = ({ onLocationSelected , defaultValue , fieldId}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [locations, setLocations] = useState([]);
   const [selectedLocations, setSelectedLocation] = useState(null);
@@ -39,6 +39,7 @@ const LocationPicker = ({ onLocationSelected , defaultValue}) => {
   return (
     <>
       <Form.Control
+      id={fieldId}
         name="selectedLocation"
         type="text"
         value={selectedLocations ? selectedLocations.name : ''}

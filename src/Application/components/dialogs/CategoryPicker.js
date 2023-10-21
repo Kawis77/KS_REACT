@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import '../../styles/dialogs/CategoryPickerStyle.css';
 
-const CategoryPicker = ({onCategorySelected , defaultValue}) => {
+const CategoryPicker = ({onCategorySelected , defaultValue , fieldId}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [categories, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -39,6 +39,7 @@ const CategoryPicker = ({onCategorySelected , defaultValue}) => {
   return (
     <>
       <Form.Control
+      id={fieldId}
         name="selectedCategory"
         type="text"
         value={selectedCategory ? selectedCategory.name : ''}

@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import '../../styles/dialogs/UserPickerStyle.css';
 
-const UserPicker = ({ onUserSelected, defaultValue }) => {
+const UserPicker = ({ onUserSelected, defaultValue , fieldId}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -39,6 +39,7 @@ const UserPicker = ({ onUserSelected, defaultValue }) => {
   return (
     <>
       <Form.Control
+        id={fieldId}
         name="selectedUser"
         type="text"
         value={selectedUser ? `${selectedUser.name} ${selectedUser.surname}` : ''}

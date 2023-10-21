@@ -8,6 +8,8 @@ import LocationPicker from '../../Application/components/dialogs/LocationPicker'
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
+import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
+
 
 
 const RegularDocumentForm = () => {
@@ -24,16 +26,19 @@ const RegularDocumentForm = () => {
   const handleUserSelected = (user) => {
     console.log('Selected user:', user);
     setOwner(user);
+    setSummaryData({ ...summaryData, owner: user.name })
   };
 
   const handleLocationSelected = (location) => {
     console.log('Selected location:', location);
     setLocation(location);
+    setSummaryData({ ...summaryData, location: location.name })
   };
 
   const handleCategorySelected = (category) => {
     console.log('Selected category:', category);
     setCategory(category);
+    setSummaryData({ ...summaryData, category: category.name })
   };
 
   const handleSelect = (selectedTab) => {
@@ -64,18 +69,20 @@ const RegularDocumentForm = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const documentData = {
-      title: formData.get('title'),
+      title: formData.get('title').trim() === '' ? null : formData.get('title'),
       owner: owner ? owner.id : null,
-      createDate: formData.get('create-date'),
+      createDate: formData.get('create-date').trim() === '' ? null : formData.get('create-date'),
       location: location ? location.id : null,
       category: category ? category.id : null,
       version: '1',
-      publicationNote: formData.get('publicationNote'),
-      content: editorData,
+      publicationNote: formData.get('publicationNote').trim() === '' ? null : formData.get('publicationNote'),
+      content: editorData
     };
 
     try {
       const response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
+      console.log(response);
+    
       if (Array.isArray(response.data)) {
         // Ustaw błędy walidacji
         setValidationErrors(response.data);
@@ -83,6 +90,7 @@ const RegularDocumentForm = () => {
         setShowValidationErrorModal(true);
       }
     } catch (error) {
+      alert("catch");
       console.error(error);
     }
   };
@@ -119,13 +127,16 @@ const RegularDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formTitle">
                   <Form.Label>Tytuł dokumentu</Form.Label>
-                  <Form.Control name='title' type="text" placeholder="Wpisz tytuł" />
+                  <Form.Control id='title-id' name='title' type="text" placeholder="Wpisz tytuł" onChange={(e) => setSummaryData({ ...summaryData, title: e.target.value })} 
+  />
+  <EmptyFieldWarning name="title-id" value={summaryData.title} />
                 </Form.Group>
               </Col>
               <Col>
               <Form.Group controlId="formOwner">
                 <Form.Label>Wlasciciel</Form.Label>
-                <UserPicker onUserSelected={handleUserSelected} />
+                <UserPicker  onUserSelected={handleUserSelected} fieldId="owner-id" />
+  <EmptyFieldWarning name="owner-id" value={summaryData.owner} />
               </Form.Group>
               </Col>
             </Row>
@@ -134,13 +145,15 @@ const RegularDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formDate">
                   <Form.Label>Data wydania</Form.Label>
-                  <Form.Control name='create-date' type="date" />
+                  <Form.Control id='create-date-id' name='create-date' type="date" onChange={(e) => setSummaryData({ ...summaryData, createDate: e.target.value })} />
+                  <EmptyFieldWarning name="create-date-id" value={summaryData.createDate} />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="formLocation">
                   <Form.Label>Lokacja</Form.Label>
-                 <LocationPicker onLocationSelected={handleLocationSelected} />
+                 <LocationPicker onLocationSelected={handleLocationSelected} fieldId='location-id' />
+                 <EmptyFieldWarning name="location-id" value={summaryData.location} />
                 </Form.Group>
               </Col>
             </Row>
@@ -149,7 +162,8 @@ const RegularDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formCategory">
                   <Form.Label>Kategoria</Form.Label>
-                  <CategoryPicker onCategorySelected={handleCategorySelected} />
+                  <CategoryPicker onCategorySelected={handleCategorySelected} fieldId='category-id' />
+                  <EmptyFieldWarning name="category-id" value={summaryData.category} />
                 </Form.Group>
               </Col>
               <Col>
@@ -168,7 +182,8 @@ const RegularDocumentForm = () => {
 
             <Form.Group controlId="formPublicationNote">
               <Form.Label>Notka publikacji</Form.Label>
-              <Form.Control name='publicationNote' as="textarea" rows={3} />
+              <Form.Control id='publication-note-id' name='publicationNote' as="textarea" rows={3} onChange={(e) => setSummaryData({ ...summaryData, publicationNote: e.target.value })}  />
+              <EmptyFieldWarning name="publication-note-id" value={summaryData.publicationNote} />
             </Form.Group>
           </Tab>
           <Tab eventKey="tab2" title="Kontent">

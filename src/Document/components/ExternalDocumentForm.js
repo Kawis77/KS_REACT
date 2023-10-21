@@ -60,13 +60,13 @@ const ExternalDocumentForm = () => {
     formData.append('documentFile', formData.get('documentFile'));
     console.log(formData.get('documentFile'));
     const documentData = {
-      title: formData.get('title'),
+      title: formData.get('title').trim() === '' ? null : formData.get('title'),
       owner: owner ? owner.id : null,
-      createDate: formData.get('create-date'),
+      createDate: formData.get('create-date').trim() === '' ? null : formData.get('create-date'),
       location: location ? location.id : null,
       category: category ? category.id : null,
       version: '1',
-      publicationNote: formData.get('publicationNote'),
+      publicationNote: formData.get('publicationNote').trim() === '' ? null : formData.get('publicationNote'),
       content: editorData,
       documentFile: formData.get('documentFile') // Dodaj przesyłany plik do documentData
     };

@@ -6,6 +6,7 @@ import LocationPicker from '../../Application/components/dialogs/LocationPicker'
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
+import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
 
 const ExternalDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -20,20 +21,19 @@ const ExternalDocumentForm = () => {
   const [validationErrors, setValidationErrors] = useState([]);
 
   const handleUserSelected = (user) => {
-    console.log(user);
     setOwner(user);
+    setSummaryData({ ...summaryData, owner: user.name })
   };
 
   const handleLocationSelected = (location) => {
-    console.log(location);
     setLocation(location);
+    setSummaryData({ ...summaryData, location: location.name })
   };
 
   const handleCategorySelected = (category) => {
-    console.log(category);
     setCategory(category);
+    setSummaryData({ ...summaryData, category: category.name })
   };
-
   const handleSelect = (selectedTab) => {
     setActiveTab(selectedTab);
     if (selectedTab === 'tab4') {
@@ -120,19 +120,22 @@ const ExternalDocumentForm = () => {
     <div>
       <Form id='external-document-form' onSubmit={handleSave}>
         <Tabs activeKey={activeTab} onSelect={handleSelect} className='nav-tabs'>
-          <Tab eventKey="tab1" title="Dane">
+        <Tab eventKey="tab1" title="Dane">
             <Row>
               <Col>
                 <Form.Group controlId="formTitle">
                   <Form.Label>Tytuł dokumentu</Form.Label>
-                  <Form.Control name='title' type="text" placeholder="Wpisz tytuł" />
+                  <Form.Control id='title-id' name='title' type="text" placeholder="Wpisz tytuł" onChange={(e) => setSummaryData({ ...summaryData, title: e.target.value })} 
+  />
+  <EmptyFieldWarning name="title-id" value={summaryData.title} />
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="formOwner">
-                  <Form.Label>Wlasciciel</Form.Label>
-                  <UserPicker onUserSelected={handleUserSelected} />
-                </Form.Group>
+              <Form.Group controlId="formOwner">
+                <Form.Label>Wlasciciel</Form.Label>
+                <UserPicker  onUserSelected={handleUserSelected} fieldId="owner-id" />
+  <EmptyFieldWarning name="owner-id" value={summaryData.owner} />
+              </Form.Group>
               </Col>
             </Row>
 
@@ -140,13 +143,15 @@ const ExternalDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formDate">
                   <Form.Label>Data wydania</Form.Label>
-                  <Form.Control name='create-date' type="date" />
+                  <Form.Control id='create-date-id' name='create-date' type="date" onChange={(e) => setSummaryData({ ...summaryData, createDate: e.target.value })} />
+                  <EmptyFieldWarning name="create-date-id" value={summaryData.createDate} />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="formLocation">
                   <Form.Label>Lokacja</Form.Label>
-                  <LocationPicker onLocationSelected={handleLocationSelected} />
+                 <LocationPicker onLocationSelected={handleLocationSelected} fieldId='location-id' />
+                 <EmptyFieldWarning name="location-id" value={summaryData.location} />
                 </Form.Group>
               </Col>
             </Row>
@@ -155,25 +160,28 @@ const ExternalDocumentForm = () => {
               <Col>
                 <Form.Group controlId="formCategory">
                   <Form.Label>Kategoria</Form.Label>
-                  <CategoryPicker onCategorySelected={handleCategorySelected} />
+                  <CategoryPicker onCategorySelected={handleCategorySelected} fieldId='category-id' />
+                  <EmptyFieldWarning name="category-id" value={summaryData.category} />
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="formVersion">
-                  <Form.Label>Wersja</Form.Label>
-                  <Form.Control
-                    name="version"
-                    type="text"
-                    placeholder="Wersja dokumentu"
-                    value="1" // Ustawia domyślną wartość 1
-                    readOnly
-                  />
-                </Form.Group>
-              </Col>
+        <Form.Group controlId="formVersion">
+          <Form.Label>Wersja</Form.Label>
+          <Form.Control
+            name="version"
+            type="text"
+            placeholder="Wersja dokumentu"
+            value="1" // Ustawia domyślną wartość 1
+            readOnly 
+          />
+        </Form.Group>
+      </Col>
             </Row>
+
             <Form.Group controlId="formPublicationNote">
               <Form.Label>Notka publikacji</Form.Label>
-              <Form.Control name='publicationNote' as="textarea" rows={3} />
+              <Form.Control id='publication-note-id' name='publicationNote' as="textarea" rows={3} onChange={(e) => setSummaryData({ ...summaryData, publicationNote: e.target.value })}  />
+              <EmptyFieldWarning name="publication-note-id" value={summaryData.publicationNote} />
             </Form.Group>
           </Tab>
           <Tab eventKey="tab2" title="Kontent">

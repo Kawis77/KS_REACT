@@ -7,10 +7,10 @@ const EmptyFieldWarning = ({ value, name }) => {
     if (divElement) {
       divElement.style.background = '#ffe8e7';
     }
-  }else if(value){
-    divElement.style.background = 'white';
   }else{
-    divElement.style.background = '#ffe8e7';
+    if(divElement){
+    divElement.style.background = 'white';
+  }
   }
 };
 

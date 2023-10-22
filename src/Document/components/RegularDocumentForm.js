@@ -24,19 +24,16 @@ const RegularDocumentForm = () => {
   const [validationErrors, setValidationErrors] = useState([]);
 
   const handleUserSelected = (user) => {
-    console.log('Selected user:', user);
     setOwner(user);
     setSummaryData({ ...summaryData, owner: user.name })
   };
 
   const handleLocationSelected = (location) => {
-    console.log('Selected location:', location);
     setLocation(location);
     setSummaryData({ ...summaryData, location: location.name })
   };
 
   const handleCategorySelected = (category) => {
-    console.log('Selected category:', category);
     setCategory(category);
     setSummaryData({ ...summaryData, category: category.name })
   };

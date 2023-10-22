@@ -6,6 +6,7 @@ import LocationPicker from '../../Application/components/dialogs/LocationPicker'
 import CategoryPicker from '../../Application/components/dialogs/CategoryPicker';
 import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
+import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
 
 const EditExternalDocumentForm = ({ id }) => {
   const [documentt, setDocument] = useState({});
@@ -166,10 +167,11 @@ const EditExternalDocumentForm = ({ id }) => {
         <Tabs activeKey={activeTab} onSelect={handleSelect} className="nav-tabs">
           <Tab eventKey="tab1" title="Dane">
             <Row>
-              <Col>
+            <Col>
                 <Form.Group controlId="formTitle">
                   <Form.Label>Tytuł dokumentu</Form.Label>
-                  <Form.Control name="title" type="text" placeholder="Wpisz tytuł" defaultValue={summaryData.title} />
+                  <Form.Control id='title-id' name="title" type="text" placeholder="Wpisz tytuł" defaultValue={summaryData.title} onChange={(e) => setSummaryData({ ...summaryData, title: e.target.value })} />
+                  <EmptyFieldWarning name="title-id" value={summaryData.title} />
                 </Form.Group>
               </Col>
               <Col>
@@ -181,10 +183,11 @@ const EditExternalDocumentForm = ({ id }) => {
             </Row>
 
             <Row>
-              <Col>
+            <Col>
                 <Form.Group controlId="formDate">
                   <Form.Label>Data wydania</Form.Label>
-                  <Form.Control name='create-date' type="date" defaultValue={summaryData.createDate} />
+                  <Form.Control id='create-date-id' name='create-date' type="date" defaultValue={summaryData.createDate} onChange={(e) => setSummaryData({ ...summaryData, createDate: e.target.value })} />
+                  <EmptyFieldWarning name="create-date-id" value={summaryData.createDate} />
                 </Form.Group>
               </Col>
               <Col>
@@ -215,10 +218,10 @@ const EditExternalDocumentForm = ({ id }) => {
                 </Form.Group>
               </Col>
             </Row>
-
             <Form.Group controlId="formPublicationNote">
               <Form.Label>Notka publikacji</Form.Label>
-              <Form.Control name='publicationNote' as="textarea" rows={3} defaultValue={summaryData.publicationNote} />
+              <Form.Control id='publication-note-id' name='publicationNote' as="textarea" rows={3} defaultValue={summaryData.publicationNote} onChange={(e) => setSummaryData({ ...summaryData, publicationNote: e.target.value })}  />
+              <EmptyFieldWarning name="publication-note-id" value={summaryData.publicationNote} />
             </Form.Group>
           </Tab>
           <Tab eventKey="tab2" title="Kontent">

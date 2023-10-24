@@ -96,18 +96,21 @@ const EditExternalDocumentForm = ({ id }) => {
       content: editorData,
       documentFile: formData.get('documentFile') // Dodaj przesyłany plik do documentData
     };
+    const response = null;
     try {
-      const response = await axios.post('http://localhost:8080/api/document/external/update', documentData, {
+      response = await axios.post('http://localhost:8080/api/document/external/update', documentData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
       });
+    
+    } catch (error) {
       if (Array.isArray(response.data)) {
         setValidationErrors(response.data);
         setShowValidationErrorModal(true);
-      }
-    } catch (error) {
+      }else{
       console.error(error);
+      }
     }
   };
 

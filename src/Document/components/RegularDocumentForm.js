@@ -76,19 +76,19 @@ const RegularDocumentForm = () => {
       content: editorData
     };
 
+    const response = null;
     try {
-      const response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
+      response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
       console.log(response);
     
-      if (Array.isArray(response.data)) {
-        // Ustaw błędy walidacji
-        setValidationErrors(response.data);
-        // Otwórz modal z błędami
-        setShowValidationErrorModal(true);
-      }
+  
     } catch (error) {
-      alert("catch");
+      if (Array.isArray(response.data)) {
+        setValidationErrors(response.data);
+        setShowValidationErrorModal(true);
+      }else{
       console.error(error);
+      }
     }
   };
 

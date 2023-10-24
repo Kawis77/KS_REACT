@@ -9,6 +9,7 @@ import CategoryPicker from '../../Application/components/dialogs/CategoryPicker'
 import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
+import MessageDialog from '../../Application/components/dialogs/MessageDialog';
 
 const EditRegularDocumentForm = ({ id }) => {
   const [documentt, setDocument] = useState({});
@@ -21,6 +22,7 @@ const EditRegularDocumentForm = ({ id }) => {
   const [summaryEditData, setSummaryEditData] = useState({});
   const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [summaryData, setSummaryData] = useState({
     title: '',
     owner: '',
@@ -102,21 +104,22 @@ const EditRegularDocumentForm = ({ id }) => {
       content: editorData,
       documentFile: formData.get('documentFile') // Dodaj przesyłany plik do documentData
     };
+    let response = null;
     try {
-      console.log(documentData);
-      const response = await axios.post('http://localhost:8080/api/document/regular/update', documentData, {
+      response = await axios.post('http://localhost:8080/api/document/regular/update', documentData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
       });
-      if (Array.isArray(response.data)) {
-        // Ustaw błędy walidacji
-        setValidationErrors(response.data);
-        // Otwórz modal z błędami
-        setShowValidationErrorModal(true);
-      }
+      setShowSuccessModal(true);
     } catch (error) {
+      debugger;
+      if (Array.isArray(response.data)) {
+        setValidationErrors(response.data);
+        setShowValidationErrorModal(true);
+      }else{
       console.error(error);
+      }
     }
   };
 
@@ -247,6 +250,9 @@ const EditRegularDocumentForm = ({ id }) => {
           onRequestClose={() => setShowValidationErrorModal(false)}
           validationErrors={validationErrors}
         />
+      )}
+      {showSuccessModal && (
+        <MessageDialog message="Edycja dokumentu przebiegła pomyślnie" />
       )}
     </div>
   );

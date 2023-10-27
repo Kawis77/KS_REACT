@@ -5,8 +5,6 @@ import { Button } from 'react-bootstrap';
 const MessageDialog = ({ message}) => {
     const [isOpen, setIsOpen] = useState(true);
 
-
-    alert('jestem tutaj');
     const closeModal = () => {
         setIsOpen(false);
       };
@@ -18,9 +16,10 @@ const MessageDialog = ({ message}) => {
       style={{
         content: {
           width: '500px',
-          height: '300px',
+          height: '200px',
           margin: 'auto',
           overflow: 'auto',
+          border: '1px solid black'
         },
       }}
     >

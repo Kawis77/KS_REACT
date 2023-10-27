@@ -9,6 +9,7 @@ import CategoryPicker from '../../Application/components/dialogs/CategoryPicker'
 import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
+import MessageDialog from '../../Application/components/dialogs/MessageDialog';
 
 
 
@@ -22,6 +23,7 @@ const RegularDocumentForm = () => {
 
   const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleUserSelected = (user) => {
     setOwner(user);
@@ -76,12 +78,10 @@ const RegularDocumentForm = () => {
       content: editorData
     };
 
-    const response = null;
+    let response = null;
     try {
       response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
-      console.log(response);
-    
-  
+      setShowSuccessModal(true);
     } catch (error) {
       if (Array.isArray(response.data)) {
         setValidationErrors(response.data);
@@ -225,6 +225,9 @@ const RegularDocumentForm = () => {
           onRequestClose={() => setShowValidationErrorModal(false)}
           validationErrors={validationErrors}
         />
+      )}
+           {showSuccessModal && (
+        <MessageDialog message="Edycja dokumentu przebiegła pomyślnie" />
       )}
     </div>
   );

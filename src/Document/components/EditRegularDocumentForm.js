@@ -113,7 +113,6 @@ const EditRegularDocumentForm = ({ id }) => {
       });
       setShowSuccessModal(true);
     } catch (error) {
-      debugger;
       if (Array.isArray(response.data)) {
         setValidationErrors(response.data);
         setShowValidationErrorModal(true);

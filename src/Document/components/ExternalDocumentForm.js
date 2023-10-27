@@ -7,6 +7,7 @@ import CategoryPicker from '../../Application/components/dialogs/CategoryPicker'
 import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
+import MessageDialog from '../../Application/components/dialogs/MessageDialog';
 
 const ExternalDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -19,6 +20,7 @@ const ExternalDocumentForm = () => {
 
   const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleUserSelected = (user) => {
     setOwner(user);
@@ -70,14 +72,14 @@ const ExternalDocumentForm = () => {
       content: editorData,
       documentFile: formData.get('documentFile') // Dodaj przesyłany plik do documentData
     };
-    const response = null;
+    let response = null;
     try {
       response = await axios.post('http://localhost:8080/api/document/external/create', documentData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
       });
-
+      setShowSuccessModal(true);
     } catch (error) {
       if (Array.isArray(response.data)) {
         setValidationErrors(response.data);
@@ -232,6 +234,9 @@ const ExternalDocumentForm = () => {
           onRequestClose={() => setShowValidationErrorModal(false)}
           validationErrors={validationErrors}
         />
+      )}
+           {showSuccessModal && (
+        <MessageDialog message="Edycja dokumentu przebiegła pomyślnie" />
       )}
     </div>
   );

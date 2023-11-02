@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const MessageDialog = ({ message}) => {
+const MessageDialog = ({ message , url}) => {
     const [isOpen, setIsOpen] = useState(true);
+
+
+    const navigate = useNavigate();
 
     const closeModal = () => {
         setIsOpen(false);
+        navigate(url);
       };
     
+  
+
   return (
     <Modal
       isOpen={isOpen}

@@ -10,6 +10,7 @@ import './../../../src/Document/styles/DocumentForm.css';
 import FieldsValidate from '../../Application/components/dialogs/FieldsValidate';
 import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
 import MessageDialog from '../../Application/components/dialogs/MessageDialog';
+import { useNavigate } from 'react-router-dom';
 
 const EditRegularDocumentForm = ({ id }) => {
   const [documentt, setDocument] = useState({});
@@ -23,6 +24,7 @@ const EditRegularDocumentForm = ({ id }) => {
   const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
   const [summaryData, setSummaryData] = useState({
     title: '',
     owner: '',
@@ -37,6 +39,8 @@ const EditRegularDocumentForm = ({ id }) => {
     path: '',
     content: ''
   });
+
+  const regularDocumentType = 1;
 
   const handleUserSelected = (user) => {
     console.log('Selected user:', user);
@@ -251,7 +255,8 @@ const EditRegularDocumentForm = ({ id }) => {
         />
       )}
       {showSuccessModal && (
-        <MessageDialog message="Edycja dokumentu przebiegła pomyślnie" />
+        <MessageDialog message="Edycja dokumentu przebiegła pomyślnie" url={`/show-document/${id}/${regularDocumentType}`} />
+
       )}
     </div>
   );

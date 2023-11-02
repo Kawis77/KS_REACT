@@ -11,8 +11,6 @@ import FieldsValidate from '../../Application/components/dialogs/FieldsValidate'
 import EmptyFieldWarning from '../../Application/components/fields/EmptyFieldWarning';
 import MessageDialog from '../../Application/components/dialogs/MessageDialog';
 
-
-
 const RegularDocumentForm = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [editorData, setEditorData] = useState('');
@@ -20,10 +18,13 @@ const RegularDocumentForm = () => {
   const [owner, setOwner] = useState(null);
   const [location, setLocation] = useState(null);
   const [category, setCategory] = useState(null);
+  const [id, setID] = useState(null);
 
   const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+const regularDocumentType = 1;
 
   const handleUserSelected = (user) => {
     setOwner(user);
@@ -81,9 +82,11 @@ const RegularDocumentForm = () => {
     let response = null;
     try {
       response = await axios.post('http://localhost:8080/api/document/regular/create', documentData);
+      console.log(response);
       setShowSuccessModal(true);
+      setID(response.data.id);
     } catch (error) {
-      if (Array.isArray(response.data)) {
+      if (Array.isArray(response.data.id)) {
         setValidationErrors(response.data);
         setShowValidationErrorModal(true);
       }else{
@@ -226,8 +229,8 @@ const RegularDocumentForm = () => {
           validationErrors={validationErrors}
         />
       )}
-           {showSuccessModal && (
-        <MessageDialog message="Edycja dokumentu przebiegła pomyślnie" />
+    {showSuccessModal && (
+        <MessageDialog message="Utworzenie dokumentu przebiegło pomyślnie" url={`/show-document/${id}/${regularDocumentType}`} />
       )}
     </div>
   );

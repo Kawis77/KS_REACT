@@ -1,7 +1,7 @@
 import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import { useParams } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
+import MainDocumentMenu from '../components/MainDocumentMenu';
 import EditRegularlDocumentForm from '../components/EditRegularDocumentForm';
 import EditExternalDocumentForm from '../components/EditExternalDocumentForm';
 
@@ -12,7 +12,7 @@ function EditDocument(
   return (
     <div>
       <DocumentNavigationBar />
-      <Sidebar />
+      <MainDocumentMenu />
       <div className="add-form-content">
         <h1>Edytuj dokument</h1>
         <EditRegularlDocumentForm id={id}/>
@@ -23,7 +23,7 @@ function EditDocument(
     return(
 <div>
       <DocumentNavigationBar />
-      <Sidebar />
+      <MainDocumentMenu />
       <div className="add-form-content">
         <h1>Edytuj dokument</h1>
         <EditExternalDocumentForm id={id}/>

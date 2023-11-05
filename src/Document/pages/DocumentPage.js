@@ -1,13 +1,13 @@
 import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
-import Sidebar from '../components/Sidebar';
+import MainDocumentMenu from '../components/MainDocumentMenu';
 
 
 function DocumentPage() {
   return (
     <div className='page-content'>
       <DocumentNavigationBar/>
-    <Sidebar/>
+    <MainDocumentMenu/>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Button } from 'react-bootstrap';
-import '../../styles/dialogs/DocumentType.css';
+import './../../../src/Document/styles/DocumentType.css';
 import { FileOutlined, UploadOutlined } from '@ant-design/icons';
 
 function DocumentType({ onTypeSelected }) {

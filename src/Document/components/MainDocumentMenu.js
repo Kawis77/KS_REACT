@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import './../../../src/Document/styles/Sidebar.css';
-import DocumentType from '../../Application/components/dialogs/DocumentType';
+import './../../../src/Document/styles/MainDocumentMenu.css';
+import DocumentType from './DocumentType';
 
-function Sidebar() {
+function MainDocumentMenu() {
   const [showDocumentType, setShowDocumentType] = useState(false); // Stan do zarządzania widocznością komponentu DocumentType
 
   const handleOpenDocumentType = () => {
@@ -51,4 +51,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default MainDocumentMenu;

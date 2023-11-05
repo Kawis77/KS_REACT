@@ -17,10 +17,11 @@ const ExternalDocumentForm = () => {
   const [location, setLocation] = useState(null);
   const [category, setCategory] = useState(null);
   const [path , setPath] = useState(null);
-
   const [showValidationErrorModal, setShowValidationErrorModal] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const[id , setID] = useState(null);
+  const externalDocumentType = 2;
 
   const handleUserSelected = (user) => {
     setOwner(user);
@@ -79,6 +80,7 @@ const ExternalDocumentForm = () => {
           'Content-Type': 'multipart/form-data', // Ustaw odpowiedni nagłówek dla przesyłania plików
         },
       });
+      setID(response.data.id);
       setShowSuccessModal(true);
     } catch (error) {
       if (Array.isArray(response.data)) {
@@ -235,8 +237,8 @@ const ExternalDocumentForm = () => {
           validationErrors={validationErrors}
         />
       )}
-           {showSuccessModal && (
-        <MessageDialog message="Edycja dokumentu przebiegła pomyślnie" />
+    {showSuccessModal && (
+        <MessageDialog message="Utworzenie dokumentu przebiegło pomyślnie" url={`/show-document/${id}/${externalDocumentType}`} />
       )}
     </div>
   );

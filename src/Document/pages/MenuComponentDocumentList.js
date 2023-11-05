@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
-import Sidebar from '../components/Sidebar';
+import MainDocumentMenu from '../components/MainDocumentMenu';
 import { useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
 import './../../../src/Document/styles/MenuDocumentList.css';
@@ -68,7 +68,7 @@ function MenuComponentDocumentList() {
   return (
     <div>
       <DocumentNavigationBar />
-      <Sidebar />
+      <MainDocumentMenu />
       <div className="table-container">
         <Table
           dataSource={data}

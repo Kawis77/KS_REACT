@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
-import Sidebar from '../components/Sidebar';
+import MainDocumentMenu from '../components/MainDocumentMenu';
 import { Table } from 'antd';
 import './../../../src/Document/styles/DocumentList.css';
 import { FileOutlined } from '@ant-design/icons';
@@ -67,7 +67,7 @@ function DocumentList() {
   return (
     <div>
       <DocumentNavigationBar />
-      <Sidebar />
+      <MainDocumentMenu />
       <div className="table-container">
         <Table
           dataSource={data}

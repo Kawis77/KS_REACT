@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
-import Sidebar from '../components/Sidebar';
+import MainDocumentMenu from '../components/MainDocumentMenu';
 import RegularDocumentForm from '../components/RegularDocumentForm';
 import './../../../src/Document/styles/DocumentForm.css';
 
@@ -8,7 +8,7 @@ function AddDocument() {
   return (
     <div>
       <DocumentNavigationBar />
-      <Sidebar />
+      <MainDocumentMenu />
       <div className="add-form-content">
         <h1>Dodaj nowy dokument</h1>
         <RegularDocumentForm />

@@ -1,6 +1,6 @@
 import DocumentNavigationBar from '../components/DocumentNavigationBar';
 import { useParams } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
+import MainDocumentMenu from '../components/MainDocumentMenu';
 import DocumentView from '../components/DocumentView';
 import './../../../src/Document/styles/ShowDocument.css';
 import OptionMenuDocument from '../components/OptionMenuDocument';
@@ -10,7 +10,7 @@ function ShowDocument() {
   return (
     <div>
       <DocumentNavigationBar />
-      <Sidebar />
+      <MainDocumentMenu />
       <div className="show-document-content">
         <DocumentView id={id} />
         <OptionMenuDocument id={id} type={type} /> {/* Poprawione przekazanie id */}

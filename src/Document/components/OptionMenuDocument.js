@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './../../../src/Document/styles/OptionMenuDocument.css';
-import { FileOutlined, EditOutlined, ExportOutlined, DeleteOutlined } from '@ant-design/icons'; // Importuj ikony
+import { FileOutlined, EditOutlined, ExportOutlined, DeleteOutlined } from '@ant-design/icons'; 
+import axios from 'axios';
 
 
 function OptionMenuDocument({id , type}) {
 
-   console.log(type);
+  const [showDeleteDocument] = useState(false); // Stan do zarządzania widocznością komponentu DocumentType
+
+  function handleDeleteDocument() {
+  
+  }
+
+
   return (
     <div className="option-menu">
       <h4 className="option-menu-title">Zarzadzaj dokumentem</h4>
@@ -22,10 +29,11 @@ function OptionMenuDocument({id , type}) {
             Przenies dokument</NavLink>
         </li>
         <li>
-          <NavLink to="/delete-one-document">
+          <NavLink onClick={handleDeleteDocument}>
           <DeleteOutlined className="nav-icon" /> 
             Usun dokument</NavLink>
         </li>
+     
       </ul>
     </div>
   );

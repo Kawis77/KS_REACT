@@ -4,24 +4,27 @@ import './../../../src/Document/styles/OptionMenuDocument.css';
 import { FileOutlined, EditOutlined, ExportOutlined, DeleteOutlined } from '@ant-design/icons'; 
 import axios from 'axios';
 import AcceptOrCancelDialog from '../../Application/components/dialogs/AcceptOrCancelDialog';
+import MoveDocument from './dialogs/MoveDocument';
 
 
 function OptionMenuDocument({id , type}) {
 
-  const [showDeleteDocument , setShowDeleteDocument] = useState(false); // Stan do zarządzania widocznością komponentu DocumentType
+  const [showDeleteDocument , setShowDeleteDocument] = useState(false);
+  const [showMoveDocument , setShowMoveDocument] = useState(false);
 
   function handleDeleteDocument() {
     setShowDeleteDocument(true);
   }
 
+  function handleMoveDocument() {
+    setShowMoveDocument(true);
+  }
 
   const fetchData = async () => {
     try {
       const response = await axios.delete('http://localhost:8080/api/document/delete/' + id);
-      // Otrzymujesz dane z odpowiedzi
       console.log(response.data);
     } catch (error) {
-      // Obsługa błędów
       console.error(error);
     }
   }
@@ -36,7 +39,7 @@ function OptionMenuDocument({id , type}) {
             Edytuj dokument</NavLink>
         </li>
         <li>
-          <NavLink to="/move-one-document">
+          <NavLink onClick={handleMoveDocument}>
           <ExportOutlined className="nav-icon" /> 
             Przenies dokument</NavLink>
         </li>
@@ -45,8 +48,13 @@ function OptionMenuDocument({id , type}) {
           <DeleteOutlined className="nav-icon" /> 
             Usun dokument</NavLink>
         </li>
-     
       </ul>
+
+
+      {showMoveDocument && (
+        <MoveDocument
+        id={id}/>
+      )}
 
       {showDeleteDocument && (
         <AcceptOrCancelDialog

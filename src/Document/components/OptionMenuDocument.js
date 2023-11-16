@@ -4,7 +4,7 @@ import './../../../src/Document/styles/OptionMenuDocument.css';
 import { FileOutlined, EditOutlined, ExportOutlined, DeleteOutlined } from '@ant-design/icons'; 
 import axios from 'axios';
 import AcceptOrCancelDialog from '../../Application/components/dialogs/AcceptOrCancelDialog';
-import MoveDocument from './dialogs/MoveDocument';
+import MoveDocument from './MoveDocument';
 
 
 function OptionMenuDocument({id , type}) {

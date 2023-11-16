@@ -1,0 +1,9 @@
+.move-document-dialog {
+    display: flex;
+}
+
+#left-files-container, #right-files-container {
+    flex: 1;
+    width: 20%; /* Dodatkowy styl ramki dla celów prezentacyjnych */
+    height: 80%;
+}

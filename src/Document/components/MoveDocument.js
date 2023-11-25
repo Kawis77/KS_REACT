@@ -10,11 +10,17 @@ const MoveDocument = ({ id }) => {
   const [locations, setLocations] = useState(null);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedObject, setSelectedObject] = useState(null);
+  const [isChildDocumentsVisible, setIsChildDocumentsVisible] = useState(true);
+
 
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/document/move/${id}`);
+        const response = await axios.get(`http://localhost:8080/api/document/select/move/${id}`);
+
+        console.log(response.data.document);
+
         setDocuments(response.data.documents);
         setLocations(response.data.locations);
       } catch (error) {
@@ -29,10 +35,20 @@ const MoveDocument = ({ id }) => {
   };
 
   const acceptAction = () => {
+    const documentId = selectedDocument.id;
+    const componentId = selectedLocation.id;
+
+      try {
+        const response = axios.post(`http://localhost:8080/api/document/change/move/${documentId}/${componentId}`);
+      } catch (error) {
+        console.log(error);
+      }
+  
     setIsOpen(false);
   }
 
   const handleDocumentClick = (document) => {
+
     if (selectedDocument && selectedDocument.id === document.id) {
       setSelectedDocument(null);
     } else {
@@ -56,6 +72,15 @@ const MoveDocument = ({ id }) => {
     return selectedLocation && selectedLocation.id === location.id;
   };
 
+  const handleObjectClick = (object) => {
+    if (selectedObject === object) {
+      setIsChildDocumentsVisible(!isChildDocumentsVisible);
+    } else {
+      setSelectedObject(object);
+      setIsChildDocumentsVisible(true);
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -71,21 +96,30 @@ const MoveDocument = ({ id }) => {
       }}
     >
       <div className='move-document-dialog'>
-        <div id='left-files-container'>
-          <h1>Documents</h1>
-          <ul>
-            {documents &&
-              documents.map((document) => (
-                <li
-                  key={document.id}
-                  className={isDocumentSelected(document) ? 'selected' : ''}
-                  onClick={() => handleDocumentClick(document)}
-                >
-                  {document.name}
-                </li>
-              ))}
-          </ul>
-        </div>
+      <div id='left-files-container'>
+        <h1>Objects</h1>
+        <ul>
+          {documents &&
+            documents.map((object) => (
+              <li
+                key={object.id}
+                onClick={() => handleObjectClick(object)}
+              >
+                {object.name}
+                {(selectedObject === object && isChildDocumentsVisible && object.documents) && (
+                  <ul>
+                    {object.documents.map((document) => (
+                      <li key={document.id} onClick={() => handleDocumentClick(document)} className={isDocumentSelected(document) ? 'selected' : ''}>
+                        {document.title}
+                        {/* Tutaj możesz wyświetlić więcej informacji na temat dokumentu */}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+        </ul>
+      </div>
         <div id='right-files-container'>
           <h1>Locations</h1>
           <ul>
